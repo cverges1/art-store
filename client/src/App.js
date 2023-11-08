@@ -10,10 +10,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/home';
 import Nav from './components/nav';
-import CategoryPage from './pages/categories';
+import CategoryPage from './pages/shop';
 import AboutPage from './pages/about';
 import ContactPage from './pages/contact';
 import SingleProd from './pages/singleProduct';
+import StickyFooter from './components/footer';
 
 // // Create an HTTP link for GraphQL queries
 // const httpLink = createHttpLink({
@@ -53,6 +54,7 @@ function App() {
 
           </Routes>
         </React.Fragment>
+        <StickyFooter></StickyFooter>
       </Router>
     // </ApolloProvider>
   );
