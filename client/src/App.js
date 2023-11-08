@@ -1,24 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import {
+//   ApolloClient,
+//   InMemoryCache,
+//   ApolloProvider,
+//   createHttpLink,
+// } from '@apollo/client';
+// import { setContext } from '@apollo/client/link/context';
 
+import Home from './pages/home';
+import Nav from './components/nav';
+import CategoryPage from './pages/categories';
+import AboutPage from './pages/about';
+import ContactPage from './pages/contact';
+import SingleProd from './pages/singleProduct';
+
+// // Create an HTTP link for GraphQL queries
+// const httpLink = createHttpLink({
+//   uri: '/graphql',
+// });
+
+// // Set up authentication headers for Apollo Client
+// const authLink = setContext((_, { headers }) => {
+//   const token = localStorage.getItem('id_token');
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : '',
+//     },
+//   };
+// });
+
+// // Initialize Apollo Client
+// const client = new ApolloClient({
+//   link: authLink.concat(httpLink),
+//   cache: new InMemoryCache(),
+// });
+
+// Main component representing the app
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <ApolloProvider client={client}>
+      <Router>
+        <React.Fragment>
+          <header><h1>CHRIS VERGES</h1></header>
+          <Nav></Nav>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<CategoryPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+
+          </Routes>
+        </React.Fragment>
+      </Router>
+    // </ApolloProvider>
   );
 }
 
