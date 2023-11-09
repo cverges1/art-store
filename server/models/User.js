@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
 //setting up the schema model for User
 
 const userSchema = new Schema({
