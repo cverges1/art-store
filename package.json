@@ -1,7 +1,7 @@
 {
-    "name": "ecommerce-store-v2",
+    "name": "art-store",
     "version": "1.0.0",
-    "description": "full stack application for an ecommerce store",
+    "description": "full stack application for personal art store",
     "main": "server/server.js",
     "scripts": {
         "start": "node server/server.js",
@@ -17,9 +17,12 @@
         "concurrently": "^5.1.0"
     },
     "dependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
-        "@mui/material": "^5.14.13",
-        "dotenv": "^16.3.1"
+        "@mui/icons-material": "^5.14.16",
+        "@mui/material": "^5.14.17",
+        "dotenv": "^16.3.1",
+        "eslint-plugin-react-hooks": "^4.6.0"
     }
 }
