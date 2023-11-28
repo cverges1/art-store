@@ -7,13 +7,15 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { StoreProvider } from './utils/GlobalState';
+
 
 import Home from "./pages/home";
+import Shop from "./pages/shop";
+import About from "./pages/about";
+import Contact from "./pages/contact";
 import Nav from "./components/nav";
-import CategoryPage from "./pages/shop";
-import AboutPage from "./pages/about";
-import ContactPage from "./pages/contact";
-import StickyFooter from "./components/footer";
+// import StickyFooter from "./components/footer";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createHttpLink({
@@ -41,7 +43,19 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <h1>CHRIS</h1>
+      <Router>
+        <StoreProvider>
+        <React.Fragment>
+          <Nav></Nav>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </React.Fragment>
+        </StoreProvider>
+      </Router>
     </ApolloProvider>
   );
 }
