@@ -30,14 +30,6 @@ export default function Nav() {
             <Link
               variant="button"
               color="text.primary"
-              to="/shop"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              SHOP
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
               to="/about"
               sx={{ my: 1, mx: 1.5 }}
             >
