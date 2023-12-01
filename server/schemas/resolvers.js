@@ -23,25 +23,14 @@ const resolvers = {
       return await SubCategory.findById(_id);
     },
     // Get products by categoryID, subcategoryID or name
-    products: async (parent, { categoryID, subCategoryID, name }) => {
+    products: async (parent, { categoryID }) => {
       const params = {};
       if (categoryID) {
         params.categoryID = categoryID;
       }
-      if (subCategoryID) {
-        params.subCategoryID = subCategoryID;
-      }
-      if (name) {
-        params.name = {
-          $regex: name,
-        };
-      }
       return await Product.find(params)
         .sort({ createdAt: -1 })
-        .populate([
-          { path: "categoryID" },
-          { path: "subCategoryID" }
-        ]);
+        .populate({ path: "categoryID" });
     },
     // Get single product by ID
     product: async (parent, { _id }) => {
