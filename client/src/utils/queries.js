@@ -10,23 +10,25 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
-export const PRODUCTS_BY_CATEGORY = gql`
-query Query($categoryId: ID) {
-  products(categoryID: $categoryId) {
+export const QUERY_PRODUCTS = gql`
+query Product($subCategoryId: ID, $categoryId: ID, $name: String) {
+  products(subCategoryID: $subCategoryId, categoryID: $categoryId, name: $name) {
     _id
     name
     image
-    description
     price
     salePrice
-    createdAt
+    description
     categoryID {
       categoryName
+      categoryImage
       _id
     }
     subCategoryID {
       subCategoryName
+      _id
     }
+    createdAt
   }
 }
 `;

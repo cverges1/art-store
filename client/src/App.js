@@ -10,7 +10,6 @@ import { setContext } from "@apollo/client/link/context";
 import { StoreProvider } from "./utils/GlobalState";
 
 import Home from "./pages/home";
-import Shop from "./pages/shop";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 import Nav from "./components/Nav";
@@ -40,6 +39,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+client.clearStore();
+
 // Main component representing the app
 function App() {
   return (
@@ -50,10 +51,9 @@ function App() {
             <Nav></Nav>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/category/:_id" element={<ProductCard />}>
+              <Route path="/category/:id" element={<ProductCard />}>
               </Route>
             </Routes>
             <StickyFooter></StickyFooter>

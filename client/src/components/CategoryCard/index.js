@@ -1,7 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { QUERY_CATEGORIES } from "../../utils/queries"; 
+import { QUERY_CATEGORIES } from "../../utils/queries";
 import { Link } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 function CategorySection() {
   // Fetch products using GraphQL query
@@ -26,9 +27,12 @@ function CategorySection() {
         {categories.map((category) => (
           <div className="category" key={category._id}>
             <Link to={`/category/${category._id}`}>
-                <div>
-                    <p>{category.categoryName}</p>
-                </div>
+              <div>
+                <Typography>
+                  {category.categoryName}
+                  {category.image}
+                  </Typography>
+              </div>
             </Link>
           </div>
         ))}
