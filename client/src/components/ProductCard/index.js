@@ -2,12 +2,16 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { PRODUCTS_BY_CATEGORY } from "../../utils/queries";
 
-export default function ProductCard() {
-  const { loading, error, data } = useQuery(PRODUCTS_BY_CATEGORY);
+export default function ProductCard({ categoryID }) {
+  const { id } = useParams();
+
+  const { loading, error, data } = useQuery(PRODUCTS_BY_CATEGORY, {
+    variables: { categoryID: id, },
+  });
 
   if (loading) {
     // Initial loading state
@@ -21,12 +25,14 @@ export default function ProductCard() {
 
   const products = data.products;
 
-  console.log(data.products);
+  console.log(products);
+  console.log(id)
+
 
   return (
     <div>
       {products.map((product) => (
-        <div>
+        <div key={product._id}>
         <Card sx={{ minWidth: 275 }}>
           <CardContent>
             <Typography
@@ -45,7 +51,7 @@ export default function ProductCard() {
               <br />
             </Typography>
           </CardContent>
-          <Link to={`/category/${product._id}`}>
+          <Link to={`/product/${product._id}`}>
                 <div>
                     <p>View Details</p>
                 </div>

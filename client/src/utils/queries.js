@@ -11,21 +11,22 @@ export const QUERY_CATEGORIES = gql`
 `;
 
 export const PRODUCTS_BY_CATEGORY = gql`
-query Products_By_Category($categoryId: ID) {
+query Query($categoryId: ID) {
   products(categoryID: $categoryId) {
     _id
-    createdAt
+    name
     image
     description
-    name
     price
     salePrice
-    subCategoryID {
-      _id
-      subCategoryName
-    }
+    createdAt
     categoryID {
       categoryName
+      _id
+    }
+    subCategoryID {
+      subCategoryName
     }
   }
-}`
+}
+`;
