@@ -23,7 +23,7 @@ export default function CategorySection() {
   }
 
   const categories = data.categories;
-  
+
   return (
     <div style={{ textAlign: 'center' }}>
       {categories.map((category) => (
@@ -33,7 +33,7 @@ export default function CategorySection() {
               <CardMedia
                 component="img"
                 height="140"
-                image={category.categoryImage}
+                src={`/images/${category.categoryImage}`}
                 alt="category image"
               />
               <CardContent>
