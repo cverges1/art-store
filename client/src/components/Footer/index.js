@@ -37,32 +37,7 @@ const footers = [
 
 export default function StickyFooter() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-    <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
-    <CssBaseline />
-          {/* Footer */}
-          <Container>
-          <Grid container spacing={4} justifyContent="space-evenly">
-            {footers.map((footer) => (
-              <Grid item xs={6} sm={3} key={footer.title}>
-                <Typography variant="h6" color="text.primary" gutterBottom>
-                  {footer.title}
-                </Typography>
-                <ul>
-                  {footer.description.map((item) => (
-                    <li key={item}>
-                      <Link href="#" variant="subtitle1" color="text.secondary">
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-        <Container>
-        <Grid container spacing={4} justifyContent="space-evenly">
+        <Grid container  justifyContent="center">
         <Typography variant="body2" color="text.secondary">
       <Link color="inherit" href="https://www.instagram.com/chris_verges/?hl=en">
         Chris Verges Instagram
@@ -70,8 +45,5 @@ export default function StickyFooter() {
       {new Date().getFullYear()}
     </Typography>
     </Grid>
-        </Container>
-        {/* End footer */}
-        </ThemeProvider>
   );
 }

@@ -26,7 +26,6 @@ export default function Pricing() {
 
   const { loading, error, data } = useQuery(QUERY_PRODUCTS, {
     variables: { categoryId: categoryID },
-    fetchPolicy: "network-only",
   });
 
   if (loading) {
@@ -41,6 +40,8 @@ export default function Pricing() {
 
   const products = data.products;
 
+  console.log(products)
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyles
@@ -48,8 +49,13 @@ export default function Pricing() {
       />
       <CssBaseline />
 
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center", borderBottom: .5, borderColor: "divider", margin: '1'}}>
+      <Typography><h1>{products[0].categoryID.categoryName}</h1></Typography>
+      </Box>
+
+
       {/* End hero unit */}
-      <Container maxWidth="md" component="main">
+      <Container component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {products.map((product) => (
             // Enterprise card is full width at sm breakpoint
@@ -57,7 +63,6 @@ export default function Pricing() {
               item
               key={product._id}
               xs={12}
-              sm={product.title === "Enterprise" ? 12 : 6}
               md={4}
             >
               <Card>
@@ -82,9 +87,11 @@ export default function Pricing() {
                       justifyContent: "center",
                       alignItems: "baseline",
                       mb: 2,
+                      maxHeight: 300,
+                      maxWidth: 200,
                     }}
                   >
-                    <img src={product.image} alt="" />
+                    <img src={`/images/${product.image}`} alt="product thumbnail" />
                   </Box>
                 </CardContent>
                 <Typography
@@ -100,7 +107,7 @@ export default function Pricing() {
                 </Typography>
                 <CardActions>
                   <Button fullWidth variant="contained">
-                    ADD TO CART{" "}
+                    ADD TO CART
                   </Button>
                 </CardActions>
               </Card>

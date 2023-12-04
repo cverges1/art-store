@@ -6,9 +6,9 @@ db.once("open", async () => {
   await Category.deleteMany();
 
   const categories = await Category.insertMany([
-    { categoryName: "Originals", categoryImage: "http://via.placeholder.com/640x360"},
-    { categoryName: "Prints", categoryImage: "http://via.placeholder.com/640x360" },
-    { categoryName: "Commissions", categoryImage: "http://via.placeholder.com/640x360" },
+    { categoryName: "Originals", categoryImage: "Placeholder-Landscape.jpg"},
+    { categoryName: "Prints", categoryImage: "Placeholder-Landscape.jpg" },
+    { categoryName: "Commissions", categoryImage: "Placeholder-Landscape.jpg" },
   ]);
   //console log that lets us know that the categories have been seeded
   console.log("categories seeded");
@@ -30,7 +30,7 @@ db.once("open", async () => {
     {
       name: "Oil Painting 1",
       description: "Oil on canvas and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       price: 75.0,
@@ -38,7 +38,7 @@ db.once("open", async () => {
     {
       name: "Oil Painting 2",
       description: "Oil on canvas and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       price: 75.0,
@@ -46,7 +46,7 @@ db.once("open", async () => {
     {
       name: "WaterColor Painting 1",
       description: "Watercolor on cold pressed paper and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       price: 65.0,
@@ -54,7 +54,7 @@ db.once("open", async () => {
     {
       name: "WaterColor Painting 2",
       description: "Watercolor on cold pressed paper and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       price: 65.0,
@@ -62,7 +62,7 @@ db.once("open", async () => {
     {
       name: "Pen and Ink 1",
       description: "Pen and Ink on cold pressed paper and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
@@ -70,7 +70,7 @@ db.once("open", async () => {
     {
       name: "Pen and Ink 2",
       description: "Pen and Ink on cold pressed paper and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
@@ -78,7 +78,7 @@ db.once("open", async () => {
     {
       name: "Acrylic 1",
       description: "Acrylic on canvas and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[3]._id,
       price: 65.0,
@@ -86,7 +86,7 @@ db.once("open", async () => {
     {
       name: "WaterColor Print 1",
       description: "Watercolor Print and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       price: 25.0,
@@ -94,7 +94,7 @@ db.once("open", async () => {
     {
       name: "WaterColor Print 2",
       description: "Watercolor Print and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       price: 25.0,
@@ -102,7 +102,7 @@ db.once("open", async () => {
     {
       name: "Pen and Ink Print 1",
       description: "Pen and Ink on cold pressed paper and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
@@ -110,7 +110,7 @@ db.once("open", async () => {
     {
       name: "Pen and Ink Print 2",
       description: "Pen and Ink on cold pressed paper and dimensions",
-      image: "http://via.placeholder.com/640x360",
+      image: "Placeholder-Landscape.jpg",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
