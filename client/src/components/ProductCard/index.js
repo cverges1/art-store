@@ -37,48 +37,50 @@ export default function Pricing() {
   }
 
   const products = data.products;
-  console.log(products)
 
   if (products.length === 0) {
     // Render specific UI for "commissions" category
     return (
       <ThemeProvider theme={defaultTheme}>
-        <Typography sx={{textAlign: 'center'}}>
-        <Card>
-        <CardHeader
-          title="Commissions"
-          subheader={(
-            <div>
-              Have a specific idea that you would like to have made? You've found the right place!
-              Please include as many details about the piece you are envisioning in your message.
-              <br />
-              Prices and wait times on commission pieces vary depending on size, subject, and material.
-            </div>
-          )}
-                    titleTypographyProps={{ align: "center" }}
-          subheaderTypographyProps={{
-            align: "center",
-          }}
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[200]
-                : theme.palette.grey[700],
-          }}
-        />
-        <CardContent sx={{ padding: 0 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mb: 2,
-            }}
-          >
-            <ContactCard />
-          </Box>
-        </CardContent>
-      </Card>
+        <Typography sx={{ textAlign: "center" }}>
+          <Card>
+            <CardHeader
+              title="Commissions"
+              subheader={
+                <div>
+                  Have a specific idea that you would like to have made? You've
+                  found the right place! Please include as many details about
+                  the piece you are envisioning in your message.
+                  <br />
+                  Prices and wait times on commission pieces vary depending on
+                  size, subject, and material.
+                </div>
+              }
+              titleTypographyProps={{ align: "center" }}
+              subheaderTypographyProps={{
+                align: "center",
+              }}
+              sx={{
+                backgroundColor: (theme) =>
+                  theme.palette.mode === "light"
+                    ? theme.palette.grey[200]
+                    : theme.palette.grey[700],
+                    mb: -3,
+              }}
+            />
+            <CardContent sx={{ padding: 0 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
+                <ContactCard />
+              </Box>
+            </CardContent>
+          </Card>
         </Typography>
       </ThemeProvider>
     );
@@ -89,69 +91,81 @@ export default function Pricing() {
           styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }}
         />
         <CssBaseline />
-  
-        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", borderColor: "divider", margin: '1'}}>
-        <Typography><h1>{products[0].categoryID.categoryName}</h1></Typography>
+
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            borderColor: "divider",
+            margin: "1",
+          }}
+        >
+          <Typography>
+            <h1>{products[0].categoryID.categoryName}</h1>
+          </Typography>
         </Box>
-  
-  
+
         {/* End hero unit */}
         <Container component="main">
           <Grid container spacing={5} alignItems="center">
             {products.map((product) => (
-              <Grid
-                item
-                key={product._id}
-                md={4}
-              >
-                <Link key={product._id} to={`/product/${product._id}`} style={{ textDecoration: 'none'}}>
-                <Card>
-                  <CardHeader
-                    title={product.name}
-                    subheader={product.description}
-                    titleTypographyProps={{ align: "center" }}
-                    subheaderTypographyProps={{
-                      align: "center",
-                    }}
-                    sx={{
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === "light"
-                          ? theme.palette.grey[200]
-                          : theme.palette.grey[700],
-                          minHeight: 150,
-                    }}
-                  />
-                  <CardContent sx={{ padding: 0}}>
-                    <Box
+              <Grid item key={product._id} md={4}>
+                <Link
+                  key={product._id}
+                  to={`/product/${product._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Card>
+                    <CardHeader
+                      title={product.name}
+                      subheader={product.description}
+                      titleTypographyProps={{ align: "center" }}
+                      subheaderTypographyProps={{
+                        align: "center",
+                      }}
                       sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "baseline",
-                        mb: 2,
-                        maxHeight: 300,
-                        maxWidth: 200,
+                        backgroundColor: (theme) =>
+                          theme.palette.mode === "light"
+                            ? theme.palette.grey[200]
+                            : theme.palette.grey[700],
+                        minHeight: 150,
+                      }}
+                    />
+                    <CardContent sx={{ padding: 0 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "baseline",
+                          mb: 2,
+                          maxHeight: 300,
+                          maxWidth: 200,
+                        }}
+                      >
+                        <img
+                          src={`/images/${product.image}`}
+                          alt="product thumbnail"
+                        />
+                      </Box>
+                    </CardContent>
+                    <Typography
+                      sx={{
+                        textAlign: "center",
+                        backgroundColor: (theme) =>
+                          theme.palette.mode === "light"
+                            ? theme.palette.grey[200]
+                            : theme.palette.grey[700],
                       }}
                     >
-                      <img src={`/images/${product.image}`} alt="product thumbnail" />
-                    </Box>
-                  </CardContent>
-                  <Typography
-                    sx={{
-                      textAlign: "center",
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === "light"
-                          ? theme.palette.grey[200]
-                          : theme.palette.grey[700],
-                    }}
-                  >
-                    $ {product.price}
-                  </Typography>
-                  <CardActions>
-                    <Button fullWidth variant="contained">
-                      ADD TO CART
-                    </Button>
-                  </CardActions>
-                </Card>
+                      $ {product.price}
+                    </Typography>
+                    <CardActions>
+                      <Button fullWidth variant="contained">
+                        ADD TO CART
+                      </Button>
+                    </CardActions>
+                  </Card>
                 </Link>
               </Grid>
             ))}
