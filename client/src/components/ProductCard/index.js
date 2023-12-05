@@ -37,7 +37,6 @@ export default function Pricing() {
   }
 
   const products = data.products;
-  console.log(products);
 
   if (products.length === 0) {
     // Render specific UI for "commissions" category
