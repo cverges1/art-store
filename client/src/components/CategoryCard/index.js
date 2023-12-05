@@ -27,7 +27,7 @@ export default function CategorySection() {
   return (
     <div style={{ textAlign: 'center' }}>
       {categories.map((category) => (
-        <Link key={category._id} to={`/category/${category._id}`} style={{ textDecoration: 'none', display: 'inline-block', width: '75vw' }}>
+        <Link key={category._id} to={`/category/${category._id}`} style={{ textDecoration: 'none', display: 'inline-block', width: '75vw', position: 'relative' }}>
           <Card>
             <CardActionArea>
               <CardMedia
@@ -36,11 +36,10 @@ export default function CategorySection() {
                 src={`/images/${category.categoryImage}`}
                 alt="category image"
               />
-              <CardContent>
+              <CardContent style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white' }}>
                 <Typography
                   variant="h5"
                   align="center"
-                  color="text.secondary"
                   component="p"
                 >
                   {category.categoryName}

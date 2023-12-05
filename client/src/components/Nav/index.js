@@ -79,21 +79,29 @@ export default function BasicTabs() {
 
   return (
     <Box
-      sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        paddingX: 2, // Add padding for better spacing
+        mb: 1,
+      }}
     >
-      <Box sx={{ borderBottom: 1, borderColor: "divider", width: '100%',}}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}
           onChange={handleTabClick}
           aria-label="basic tabs example"
+          sx={{ "& .MuiTabs-indicator": { display: "none" } }}
         >
-          <Link to={`/`}>
+          <Box sx={{ width: "25%" }} />
+          <Link to={`/`} style={{ flex: 1 }}>
             <Tab label="Home" sx={{ color: "black" }} {...a11yProps(0)} />
           </Link>
-          <Link to={`/about`}>
+          <Link to={`/about`} style={{ flex: 1 }}>
             <Tab label="About" sx={{ color: "black" }} {...a11yProps(1)} />
           </Link>
-          <Link to={`/contact`}>
+          <Link to={`/contact`} style={{ flex: 1 }}>
             <Tab label="Contact" sx={{ color: "black" }} {...a11yProps(2)} />
           </Link>
           <Tab
@@ -102,7 +110,9 @@ export default function BasicTabs() {
             aria-owns={open ? "simple-popover" : undefined}
             aria-haspopup="true"
             onClick={handleTabClick}
+            sx={{ flex: 1 }}
           />
+          <Box sx={{ width: "25%" }} />
         </Tabs>
       </Box>
       <Popover

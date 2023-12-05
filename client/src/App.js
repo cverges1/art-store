@@ -16,6 +16,7 @@ import Nav from "./components/Nav";
 import StickyFooter from "./components/Footer";
 import ProductCard from "./components/ProductCard";
 import SingleProduct from "./components/SingleProd";
+import Header from "./components/header";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createHttpLink({
@@ -48,6 +49,7 @@ function App() {
       <Router>
         <StoreProvider>
           <React.Fragment>
+            <Header></Header>
             <Nav></Nav>
             <Routes>
               <Route path="/" element={<Home />} />

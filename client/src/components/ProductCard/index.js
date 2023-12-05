@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import AppBar from '@mui/material/AppBar';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -9,8 +8,6 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-// import StarIcon from '@mui/icons-material/StarBorder';
-// import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
@@ -18,6 +15,7 @@ import Container from "@mui/material/Container";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../../utils/queries";
+import ContactCard from "../ContactCard";
 
 const defaultTheme = createTheme();
 
@@ -46,7 +44,41 @@ export default function Pricing() {
     return (
       <ThemeProvider theme={defaultTheme}>
         <Typography sx={{textAlign: 'center'}}>
-        <h1>Commissions</h1>
+        <Card>
+        <CardHeader
+          title="Commissions"
+          subheader={(
+            <div>
+              Have a specific idea that you would like to have made? You've found the right place!
+              Please include as many details about the piece you are envisioning in your message.
+              <br />
+              Prices and wait times on commission pieces vary depending on size, subject, and material.
+            </div>
+          )}
+                    titleTypographyProps={{ align: "center" }}
+          subheaderTypographyProps={{
+            align: "center",
+          }}
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[200]
+                : theme.palette.grey[700],
+          }}
+        />
+        <CardContent sx={{ padding: 0 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <ContactCard />
+          </Box>
+        </CardContent>
+      </Card>
         </Typography>
       </ThemeProvider>
     );
@@ -65,7 +97,7 @@ export default function Pricing() {
   
         {/* End hero unit */}
         <Container component="main">
-          <Grid container spacing={5} alignItems="center" sx={{ margin: 1}}>
+          <Grid container spacing={5} alignItems="center">
             {products.map((product) => (
               <Grid
                 item
@@ -86,9 +118,10 @@ export default function Pricing() {
                         theme.palette.mode === "light"
                           ? theme.palette.grey[200]
                           : theme.palette.grey[700],
+                          minHeight: 150,
                     }}
                   />
-                  <CardContent>
+                  <CardContent sx={{ padding: 0}}>
                     <Box
                       sx={{
                         display: "flex",
