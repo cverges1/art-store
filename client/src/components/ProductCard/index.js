@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -26,6 +26,19 @@ export default function Pricing() {
     variables: { categoryId: category },
   });
 
+  const [quantities, setQuantities] = useState({});
+
+  useEffect(() => {
+    if (data && data.products) {
+      // Initialize quantities with default values for each product ID
+      const initialQuantities = {};
+      data.products.forEach((product) => {
+        initialQuantities[product._id] = 1;
+      });
+      setQuantities(initialQuantities);
+    }
+  }, [data]);
+
   if (loading) {
     // Initial loading state
     return <p>Loading...</p>;
@@ -38,7 +51,30 @@ export default function Pricing() {
 
   const products = data.products;
 
-  console.log(products)
+  console.log(products);
+
+
+  // Event handler for increasing quantity
+  const handleIncrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: (prevQuantities[productId] || 0) + 1,
+    }));
+  };
+
+  // Event handler for decreasing quantity
+  const handleDecrease = (productId) => {
+    setQuantities((prevQuantities) => {
+      const currentQuantity = prevQuantities[productId] || 0;
+      if (currentQuantity > 1) {
+        return {
+          ...prevQuantities,
+          [productId]: currentQuantity - 1,
+        };
+      }
+      return prevQuantities;
+    });
+  };
 
   if (products.length === 0) {
     // Render specific UI for "commissions" category
@@ -67,7 +103,7 @@ export default function Pricing() {
                   theme.palette.mode === "light"
                     ? theme.palette.grey[200]
                     : theme.palette.grey[700],
-                    mb: -3,
+                mb: -3,
               }}
             />
             <CardContent sx={{ padding: 0 }}>
@@ -123,6 +159,7 @@ export default function Pricing() {
                       title={product.name}
                       subheader={product.description}
                       titleTypographyProps={{ align: "center" }}
+                      style={{ textDecoration: "none" }}
                       subheaderTypographyProps={{
                         align: "center",
                       }}
@@ -132,6 +169,7 @@ export default function Pricing() {
                             ? theme.palette.grey[200]
                             : theme.palette.grey[700],
                         minHeight: 150,
+                        textDecoration: "none",
                       }}
                     />
                     <CardContent sx={{ padding: 0 }}>
@@ -151,24 +189,64 @@ export default function Pricing() {
                         />
                       </Box>
                     </CardContent>
-                    <Typography
-                      sx={{
-                        textAlign: "center",
-                        backgroundColor: (theme) =>
-                          theme.palette.mode === "light"
-                            ? theme.palette.grey[200]
-                            : theme.palette.grey[700],
-                      }}
-                    >
-                      $ {product.price}
-                    </Typography>
-                    <CardActions>
-                      <Button fullWidth variant="contained">
-                        ADD TO CART
-                      </Button>
-                    </CardActions>
+
                   </Card>
                 </Link>
+                <Card sx={{ justifyContent: "center",                         backgroundColor: (theme) =>
+                          theme.palette.mode === "light"
+                            ? theme.palette.grey[200]
+                            : theme.palette.grey[700], }}>
+                <Typography
+                      sx={{
+                        textAlign: "center"
+                      }}
+                    >
+                      $ {product.price} {product.quantity}
+                    </Typography>
+                  <CardActions sx={{ justifyContent: "center" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center", 
+                        width: "100%",
+                        marginBottom: 2,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Button onClick={() => handleDecrease(product._id)} variant="contained" sx={{width: "45%"}}>
+                          -
+                        </Button>
+                        <Box
+                          sx={{
+                            padding: "8px",
+                            marginX: "2px",
+                            minWidth: "40px", 
+                            textAlign: "center",
+                            border: "1px solid black",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <Typography>{quantities[product._id]}</Typography>
+                        </Box>
+                        <Button onClick={() => handleIncrease(product._id)} variant="contained" sx={{width: "45%"}}>
+                          +
+                        </Button>
+                      </Box>
+                      <Box sx={{ width: "100%", mt: 1, marginX: '2px' }}>
+                        <Button fullWidth variant="contained">
+                          ADD TO CART
+                        </Button>
+                      </Box>
+                    </Box>
+                  </CardActions>
+                </Card>
               </Grid>
             ))}
           </Grid>

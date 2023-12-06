@@ -34,6 +34,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       price: 75.0,
+      quantity: 1
     },
     {
       name: "Oil Painting 2",
@@ -42,6 +43,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       price: 75.0,
+      quantity: 1
     },
     {
       name: "WaterColor Painting 1",
@@ -50,6 +52,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       price: 65.0,
+      quantity: 1
     },
     {
       name: "WaterColor Painting 2",
@@ -58,6 +61,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       price: 65.0,
+      quantity: 1
     },
     {
       name: "Pen and Ink 1",
@@ -66,6 +70,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
+      quantity: 1
     },
     {
       name: "Pen and Ink 2",
@@ -74,6 +79,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
+      quantity: 1
     },
     {
       name: "Acrylic 1",
@@ -82,6 +88,7 @@ db.once("open", async () => {
       categoryID: categories[0]._id,
       subCategoryID: subCategories[3]._id,
       price: 65.0,
+      quantity: 1
     },
     {
       name: "WaterColor Print 1",
@@ -90,6 +97,7 @@ db.once("open", async () => {
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       price: 25.0,
+      quantity: 20
     },
     {
       name: "WaterColor Print 2",
@@ -98,6 +106,7 @@ db.once("open", async () => {
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       price: 25.0,
+      quantity: 20
     },
     {
       name: "Pen and Ink Print 1",
@@ -106,6 +115,7 @@ db.once("open", async () => {
       categoryID: categories[1]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
+      quantity: 20
     },
     {
       name: "Pen and Ink Print 2",
@@ -114,6 +124,7 @@ db.once("open", async () => {
       categoryID: categories[1]._id,
       subCategoryID: subCategories[2]._id,
       price: 55.0,
+      quantity: 20
     },
   ]);
   //console log that lets us know that the subcategories have been seeded
