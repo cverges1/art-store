@@ -49,8 +49,8 @@ function App() {
       <Router>
         <StoreProvider>
           <React.Fragment>
-            <Header></Header>
-            <Nav></Nav>
+            <Header />
+            <Nav />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -58,7 +58,7 @@ function App() {
               <Route path="/category/:id" element={<ProductCard />} />
               <Route path="/product/:id" element={<SingleProduct />} />
             </Routes>
-            <StickyFooter></StickyFooter>
+            <StickyFooter />
           </React.Fragment>
         </StoreProvider>
       </Router>
