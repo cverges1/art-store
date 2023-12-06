@@ -28,7 +28,7 @@ export default function About() {
           that had eluded him his whole life, how to draw without a reference.
           This simple idea of trying to learn how to draw what is in your head
           and make it look believable reignited a love and passion for art in
-          Chris, and he has been continuing to pursue this goal ever since.
+          Chris and he has been pursuing this goal ever since.
         </Typography>
         <Typography sx={{ marginBottom: 2 }} variant="body2" color="text.secondary">
           As an avid hiker and lover of the outdoors, Chris mainly depicts

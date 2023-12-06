@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-//setting up the schema model for User
+const Order = require('./Order');
 
 const userSchema = new Schema({
   firstName: {
@@ -26,6 +26,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 8,
   },
+  orders: [Order.schema]
 });
 
 userSchema.pre('save', async function (next) {
