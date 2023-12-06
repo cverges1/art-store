@@ -33,6 +33,11 @@ const productSchema = new Schema({
         type: Number,
         default: false, 
     },  
+    quantity: {
+        type: Number,
+        min: 0,
+        default: 0
+      },
     createdAt: {
         type: Date,
         default: Date.now

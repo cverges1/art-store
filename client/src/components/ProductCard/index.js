@@ -20,10 +20,10 @@ import ContactCard from "../ContactCard";
 const defaultTheme = createTheme();
 
 export default function Pricing() {
-  const { id: categoryID } = useParams();
+  const { id: category } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_PRODUCTS, {
-    variables: { categoryId: categoryID },
+    variables: { categoryId: category },
   });
 
   if (loading) {
@@ -37,6 +37,8 @@ export default function Pricing() {
   }
 
   const products = data.products;
+
+  console.log(products)
 
   if (products.length === 0) {
     // Render specific UI for "commissions" category
