@@ -10,6 +10,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { QUERY_CATEGORIES } from "../../utils/queries";
 import { useQuery } from "@apollo/client";
+import Cart from "../Cart";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -139,6 +140,7 @@ export default function BasicTabs() {
           ))}
         </List>
       </Popover>
+      <Cart></Cart>
     </Box>
   );
 }
