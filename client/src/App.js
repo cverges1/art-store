@@ -17,6 +17,7 @@ import StickyFooter from "./components/Footer";
 import ProductCard from "./components/ProductCard";
 import SingleProduct from "./components/SingleProd";
 import Header from "./components/header";
+import Detail from "./pages/detail";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createHttpLink({
@@ -56,7 +57,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/category/:id" element={<ProductCard />} />
-              <Route path="/product/:id" element={<SingleProduct />} />
+              <Route path="/product/:id" element={<Detail />} />
             </Routes>
             <StickyFooter />
           </React.Fragment>

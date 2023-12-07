@@ -1,118 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import Container from "@mui/material/Container";
-import { useParams, Link } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../../utils/queries";
-import ContactCard from "../ContactCard";
-import { idbPromise, pluralize } from "../../utils/helpers";
-import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { useStoreContext } from "../../utils/GlobalState";
+import SingleProduct from "../SingleProd";
+import ContactCard from "../ContactCard";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Card from "@mui/material/Card";
+import { Link } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function Pricing(item) {
-  const { id: category } = useParams();
+export default function Pricing() {
+  const [state, dispatch] = useStoreContext();
+  const { currentCategory } = state;
+  const { id } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_PRODUCTS, {
-    variables: { categoryId: category },
+    variables: { categoryId: id },
   });
 
-  const [state, dispatch] = useStoreContext();
-
-  const {
-    image,
-    name,
-    _id,
-    price,
-    quantity
-  } = item;
-
-  const { cart } = state
-
-  const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === _id)
-    if (itemInCart) {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      });
-      idbPromise('cart', 'put', {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      });
-    } else {
-      dispatch({
-        type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: 1 }
-      });
-      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
-    }
-  }
-
-  const [quantities, setQuantities] = useState({});
-
-  useEffect(() => {
-    if (data && data.products) {
-      // Initialize quantities with default values for each product ID
-      const initialQuantities = {};
-      data.products.forEach((product) => {
-        initialQuantities[product._id] = 1;
-      });
-      setQuantities(initialQuantities);
-    }
-  }, [data]);
-
+  
   if (loading) {
     // Initial loading state
     return <p>Loading...</p>;
   }
 
   if (error) {
-    console.log("Error fetching products", error);
+    console.log("Error fetching product", error);
     return <p>Error: {error.message}</p>;
   }
 
+  console.log(data.products)
+
   const products = data.products;
 
-  console.log(products);
-
-
-  // Event handler for increasing quantity
-  const handleIncrease = (productId) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [productId]: (prevQuantities[productId] || 0) + 1,
-    }));
-  };
-
-  // Event handler for decreasing quantity
-  const handleDecrease = (productId) => {
-    setQuantities((prevQuantities) => {
-      const currentQuantity = prevQuantities[productId] || 0;
-      if (currentQuantity > 1) {
-        return {
-          ...prevQuantities,
-          [productId]: currentQuantity - 1,
-        };
-      }
-      return prevQuantities;
-    });
-  };
-
-  if (products.length === 0) {
-    // Render specific UI for "commissions" category
+  if (currentCategory === 'commissions' || products.length <= 0) {
     return (
       <ThemeProvider theme={defaultTheme}>
         <Typography sx={{ textAlign: "center" }}>
@@ -175,117 +104,25 @@ export default function Pricing(item) {
           }}
         >
           <Typography>
-            <h1>{products[0].categoryID.categoryName}</h1>
+            <h1>
+              {products[0].categoryID.categoryName}
+            </h1>
           </Typography>
         </Box>
 
-        {/* End hero unit */}
-        <Container component="main">
-          <Grid container spacing={5} alignItems="center">
-            {products.map((product) => (
-              <Grid item key={product._id} md={4}>
-                <Link
-                  key={product._id}
-                  to={`/product/${product._id}`}
-                  style={{ textDecoration: "none" }}
-                >
-                  <Card>
-                    <CardHeader
-                      title={product.name}
-                      subheader={product.description}
-                      titleTypographyProps={{ align: "center" }}
-                      style={{ textDecoration: "none" }}
-                      subheaderTypographyProps={{
-                        align: "center",
-                      }}
-                      sx={{
-                        backgroundColor: (theme) =>
-                          theme.palette.mode === "light"
-                            ? theme.palette.grey[200]
-                            : theme.palette.grey[700],
-                        minHeight: 150,
-                        textDecoration: "none",
-                      }}
-                    />
-                    <CardContent sx={{ padding: 0 }}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "baseline",
-                          mb: 2,
-                          maxHeight: 300,
-                          maxWidth: 200,
-                        }}
-                      >
-                        <img
-                          src={`/images/${product.image}`}
-                          alt="product thumbnail"
-                        />
-                      </Box>
-                    </CardContent>
-
-                  </Card>
-                </Link>
-                <Card sx={{ justifyContent: "center",                         backgroundColor: (theme) =>
-                          theme.palette.mode === "light"
-                            ? theme.palette.grey[200]
-                            : theme.palette.grey[700], }}>
-                <Typography
-                      sx={{
-                        textAlign: "center"
-                      }}
-                    >
-                      $ {product.price} *FIX* {product.quantity} {pluralize("item", quantity)} in stock
-                    </Typography>
-                  <CardActions sx={{ justifyContent: "center" }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center", 
-                        width: "100%",
-                        marginBottom: 2,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Button onClick={() => handleDecrease(product._id)} variant="contained" sx={{width: "45%"}}>
-                          -
-                        </Button>
-                        <Box
-                          sx={{
-                            padding: "8px",
-                            marginX: "2px",
-                            minWidth: "40px", 
-                            textAlign: "center",
-                            border: "1px solid black",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          <Typography>{quantities[product._id]}</Typography>
-                        </Box>
-                        <Button onClick={() => handleIncrease(product._id)} variant="contained" sx={{width: "45%"}}>
-                          +
-                        </Button>
-                      </Box>
-                      <Box sx={{ width: "100%", mt: 1, marginX: '2px' }}>
-                        <Button fullWidth variant="contained" onClick={addToCart}>
-                          ADD TO CART
-                        </Button>
-                      </Box>
-                    </Box>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        {products.map((product) => (
+          <Link key={product._id}
+          to={`/product/${product._id}`}>
+                    <SingleProduct
+            _id={product._id}
+            name={product.name}
+            image={product.image}
+            price={product.price}
+            quantity={product.quantity}
+            description={product.description}
+          />
+          </Link>
+        ))}
       </ThemeProvider>
     );
   }
