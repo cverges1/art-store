@@ -11,20 +11,55 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
-
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../../utils/queries";
 import ContactCard from "../ContactCard";
+import { idbPromise, pluralize } from "../../utils/helpers";
+import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import { useStoreContext } from "../../utils/GlobalState";
 
 const defaultTheme = createTheme();
 
-export default function Pricing() {
+export default function Pricing(item) {
   const { id: category } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_PRODUCTS, {
     variables: { categoryId: category },
   });
+
+  const [state, dispatch] = useStoreContext();
+
+  const {
+    image,
+    name,
+    _id,
+    price,
+    quantity
+  } = item;
+
+  const { cart } = state
+
+  const addToCart = () => {
+    const itemInCart = cart.find((cartItem) => cartItem._id === _id)
+    if (itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        _id: _id,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      });
+      idbPromise('cart', 'put', {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      });
+    } else {
+      dispatch({
+        type: ADD_TO_CART,
+        product: { ...item, purchaseQuantity: 1 }
+      });
+      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
+    }
+  }
 
   const [quantities, setQuantities] = useState({});
 
@@ -201,7 +236,7 @@ export default function Pricing() {
                         textAlign: "center"
                       }}
                     >
-                      $ {product.price} {product.quantity}
+                      $ {product.price} *FIX* {product.quantity} {pluralize("item", quantity)} in stock
                     </Typography>
                   <CardActions sx={{ justifyContent: "center" }}>
                     <Box
@@ -240,7 +275,7 @@ export default function Pricing() {
                         </Button>
                       </Box>
                       <Box sx={{ width: "100%", mt: 1, marginX: '2px' }}>
-                        <Button fullWidth variant="contained">
+                        <Button fullWidth variant="contained" onClick={addToCart}>
                           ADD TO CART
                         </Button>
                       </Box>

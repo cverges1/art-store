@@ -51,10 +51,15 @@ export default function BasicTabs() {
 
   const handleTabClick = (event, newValue) => {
     setValue(newValue);
-
-    // Toggle the dropdown
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+  
+    // Check if the clicked tab is "Shop" before toggling the popover
+    if (newValue === 3) {
+      setAnchorEl(event.currentTarget);
+    } else {
+      setAnchorEl(null);
+    }
   };
+  
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
@@ -63,11 +68,9 @@ export default function BasicTabs() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  // Fetch products using GraphQL query
   const { loading, error, data } = useQuery(QUERY_CATEGORIES);
 
   if (loading) {
-    // Initial loading state
     return <p>Loading...</p>;
   }
 
@@ -84,36 +87,52 @@ export default function BasicTabs() {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        paddingX: 2, // Add padding for better spacing
+        paddingX: 2,
         mb: 1,
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}
-          onChange={handleTabClick}
+          onChange={(event, newValue) => handleTabClick(event, newValue)}
           aria-label="basic tabs example"
-          sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+          sx={{
+            "& .MuiTabs-indicator": { display: "none" },
+            marginLeft: 12, 
+          }}
         >
-          <Box sx={{ width: "25%" }} />
-          <Link to={`/`} style={{ flex: 1 }}>
-            <Tab label="Home" sx={{ color: "black" }} {...a11yProps(0)} />
-          </Link>
-          <Link to={`/about`} style={{ flex: 1 }}>
-            <Tab label="About" sx={{ color: "black" }} {...a11yProps(1)} />
-          </Link>
-          <Link to={`/contact`} style={{ flex: 1 }}>
-            <Tab label="Contact" sx={{ color: "black" }} {...a11yProps(2)} />
-          </Link>
+          <Tab
+            label="Home"
+            component={Link}
+            to="/"
+            onClick={(event) => handleTabClick(event, 0)}
+            sx={{ color: "black", flex: 1 }}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="About"
+            component={Link}
+            to="/about"
+            onClick={(event) => handleTabClick(event, 1)}
+            sx={{ color: "black", flex: 1 }}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label="Contact"
+            component={Link}
+            to="/contact"
+            onClick={(event) => handleTabClick(event, 2)}
+            sx={{ color: "black", flex: 1 }}
+            {...a11yProps(2)}
+          />
           <Tab
             label="Shop"
-            {...a11yProps(3)}
             aria-owns={open ? "simple-popover" : undefined}
             aria-haspopup="true"
-            onClick={handleTabClick}
-            sx={{ flex: 1 }}
+            onClick={(event) => handleTabClick(event, 3)}
+            sx={{ color: "black", flex: 1 }}
+            {...a11yProps(3)}
           />
-          <Box sx={{ width: "25%" }} />
         </Tabs>
       </Box>
       <Popover
@@ -123,11 +142,11 @@ export default function BasicTabs() {
         onClose={handlePopoverClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "left",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "left",
         }}
       >
         <List>
@@ -140,7 +159,7 @@ export default function BasicTabs() {
           ))}
         </List>
       </Popover>
-      <Cart></Cart>
+      {/* ... (other components) */}
     </Box>
   );
 }

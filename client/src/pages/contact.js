@@ -13,7 +13,7 @@ const Contact = () => {
       <Card>
         <CardHeader
           title="Contact the Artist"
-          subheader="Please reach out for commissions, inqueries or comments. I would love to know what type of work you would like to see more of or what pieces you enjoy the most."
+          subheader="Please reach out for commissions, inqueries or comments. I would love to know what type of work you would like to see more or what pieces you enjoy the most."
           titleTypographyProps={{ align: "center" }}
           subheaderTypographyProps={{
             align: "center",
