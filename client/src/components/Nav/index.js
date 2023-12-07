@@ -159,7 +159,7 @@ export default function BasicTabs() {
           ))}
         </List>
       </Popover>
-      {/* ... (other components) */}
+      <Cart />
     </Box>
   );
 }

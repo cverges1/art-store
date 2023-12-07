@@ -1,13 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { QUERY_SINGLE_PROD } from "../../utils/queries";
 import { Box } from "@mui/system";
 import { CardHeader } from "@mui/material";
 import { idbPromise, pluralize } from "../../utils/helpers";
@@ -15,8 +12,6 @@ import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { useStoreContext } from "../../utils/GlobalState";
 
 export default function SingleProduct(item) {
-  const { id } = useParams();
-
   const [state, dispatch] = useStoreContext();
 
   const {
@@ -24,11 +19,29 @@ export default function SingleProduct(item) {
     name,
     _id,
     price,
-    quantity
+    quantity,
+    description
   } = item;
 
-  const { cart } = state
+  const { cart } = state;
 
+  // State for managing the quantity
+  const [number, setQuantity] = useState(1);
+
+  // Event handler for increasing quantity
+  const handleIncrease = () => {
+    setQuantity(number + 1);
+  };
+
+  // Event handler for decreasing quantity
+  const handleDecrease = () => {
+    if (number > 1) {
+      setQuantity(number - 1);
+    }
+  };
+
+  console.log(item)
+  
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)
     if (itemInCart) {
@@ -50,24 +63,6 @@ export default function SingleProduct(item) {
     }
   }
 
-  const { loading, error, data } = useQuery(QUERY_SINGLE_PROD, {
-    variables: { id },
-  });
-
-  if (loading) {
-    // Initial loading state
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    console.log("Error fetching product", error);
-    return <p>Error: {error.message}</p>;
-  }
-
-  const product = data.product;
-
-  console.log(product);
-
   return (
     <div
       style={{
@@ -81,14 +76,13 @@ export default function SingleProduct(item) {
         sx={{
           display: "flex",
           flexDirection: "column",
-          maxWidth: "75vw",
-          maxHeight: "75vh",
+          mt: -12,
         }}
       >
         <CardHeader
           title={
             <Typography variant="h4" align="center">
-              {product.name}
+              {item.name}
             </Typography>
           }
           titleTypographyProps={{ align: "center" }}
@@ -101,10 +95,39 @@ export default function SingleProduct(item) {
         />
         <CardMedia
           component="img"
-          alt={`${product.name}`}
-          src={`/images/${product.image}`}
+          alt={`${name}`}
+          src={`/images/${image}`}
           sx={{ minWidth: "75vw", maxHeight: "50vh" }}
         />
+        <Box>
+          <CardContent>
+            <Typography
+              variant="subtitle"
+              color="text.secondary"
+              component="div"
+              textAlign={"center"}
+              sx={{ mb: 1 }}
+            >
+              {description}
+            </Typography>
+            <Typography
+              variant="subtitle"
+              color="text.secondary"
+              component="div"
+              textAlign={"center"}
+            >
+              ${price}
+            </Typography>
+            <Typography
+              variant="subtitle"
+              color="text.secondary"
+              component="div"
+              textAlign={"center"}
+            >
+              {quantity} {pluralize("item", quantity)} in stock
+            </Typography>
+          </CardContent>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -113,34 +136,64 @@ export default function SingleProduct(item) {
             justifyContent: "space-between",
           }}
         >
-          <Box sx={{ flex: "1 0 auto" }}>
-            <CardContent>
-              <Typography
-                variant="subtitle"
-                color="text.secondary"
-                component="div"
-                textAlign={"center"}
-                sx={{ mb: 1 }}
-              >
-                {product.description}
-              </Typography>
-              <Typography
-                variant="subtitle"
-                color="text.secondary"
-                component="div"
-                textAlign={"center"}
-              >
-                ${product.price} 
-              </Typography>
-              <Typography>
-                {product.quantity}
-              </Typography>
-            </CardContent>
-          </Box>
           <CardActions>
-            <Button fullWidth variant="contained" onClick={addToCart}>
-              ADD TO CART
-            </Button>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: 2,
+              }}
+            >
+              {quantity > 1 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    marginTop: 1, // Add marginTop to separate from the quantity buttons
+                  }}
+                >
+                  <Button
+                    onClick={() => handleDecrease(_id)}
+                    variant="contained"
+                    sx={{ width: "47.5%" }}
+                  >
+                    -
+                  </Button>
+                  <Box
+                    sx={{
+                      padding: "8px",
+                      marginX: "2px",
+                      minWidth: "40px",
+                      textAlign: "center",
+                      border: "1px solid black",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <Typography>{number}</Typography>
+                  </Box>
+                  <Button
+                    onClick={() => handleIncrease(_id)}
+                    variant="contained"
+                    sx={{ width: "47.5%" }}
+                  >
+                    +
+                  </Button>
+                </Box>
+              )}
+              <Box sx={{ width: "100%" }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={addToCart}
+                  sx={{ marginTop: 1 }} // Add marginTop to separate from the quantity buttons
+                >
+                  ADD TO CART
+                </Button>
+              </Box>
+            </Box>
           </CardActions>
         </Box>
       </Card>

@@ -19,6 +19,7 @@ query Product($subCategoryId: ID, $categoryId: ID, $name: String) {
     price
     salePrice
     description
+    quantity
     categoryID {
       categoryName
       categoryImage
@@ -41,6 +42,7 @@ query SingProduct($id: ID!) {
     description
     price
     salePrice
+    quantity
     categoryID {
       categoryName
     }
