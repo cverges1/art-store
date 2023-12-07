@@ -10,10 +10,45 @@ import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_PROD } from "../../utils/queries";
 import { Box } from "@mui/system";
 import { CardHeader } from "@mui/material";
+import { idbPromise, pluralize } from "../../utils/helpers";
+import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import { useStoreContext } from "../../utils/GlobalState";
 
-export default function SingleProduct() {
+export default function SingleProduct(item) {
   const { id } = useParams();
-  console.log(id);
+
+  const [state, dispatch] = useStoreContext();
+
+  const {
+    image,
+    name,
+    _id,
+    price,
+    quantity
+  } = item;
+
+  const { cart } = state
+
+  const addToCart = () => {
+    const itemInCart = cart.find((cartItem) => cartItem._id === _id)
+    if (itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        _id: _id,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      });
+      idbPromise('cart', 'put', {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      });
+    } else {
+      dispatch({
+        type: ADD_TO_CART,
+        product: { ...item, purchaseQuantity: 1 }
+      });
+      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
+    }
+  }
 
   const { loading, error, data } = useQuery(QUERY_SINGLE_PROD, {
     variables: { id },
@@ -95,12 +130,15 @@ export default function SingleProduct() {
                 component="div"
                 textAlign={"center"}
               >
-                ${product.price}
+                ${product.price} 
+              </Typography>
+              <Typography>
+                {product.quantity}
               </Typography>
             </CardContent>
           </Box>
           <CardActions>
-            <Button fullWidth variant="contained">
+            <Button fullWidth variant="contained" onClick={addToCart}>
               ADD TO CART
             </Button>
           </CardActions>
