@@ -78,7 +78,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="cart">
+    <div className="cart" style={{ zIndex: 9999 }}>
       <div className="close">
         <Button
           variant="contained"

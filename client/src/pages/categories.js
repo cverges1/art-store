@@ -67,7 +67,6 @@ export default function Categories() {
                   theme.palette.mode === "light"
                     ? theme.palette.grey[200]
                     : theme.palette.grey[700],
-                mb: -3,
               }}
             />
             <CardContent sx={{ padding: 0 }}>

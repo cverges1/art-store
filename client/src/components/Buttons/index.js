@@ -128,7 +128,7 @@ export default function CartButtons(item) {
               sx={{ marginTop: 1, backgroundColor: "black", "&:hover": {
                 backgroundColor: "white",
                 color: "black",
-              }, }} // Add marginTop to separate from the quantity buttons
+              }, }}
             >
               ADD TO CART
             </Button>
