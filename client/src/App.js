@@ -17,6 +17,7 @@ import StickyFooter from "./components/Footer";
 import Header from "./components/header";
 import Detail from "./pages/detail";
 import Categories from "./pages/categories";
+import NoMatch from "./pages/NoMatch";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createHttpLink({
@@ -60,6 +61,10 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/category/:id" element={<Categories />} />
               <Route path="/product/:id" element={<Detail />} />
+              <Route 
+                path="*" 
+                element={<NoMatch />} 
+              />
             </Routes>
             <StickyFooter />
           </React.Fragment>
