@@ -86,55 +86,65 @@ export default function BasicTabs() {
       sx={{
         width: "100%",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         paddingX: 2,
         mb: 1,
+        alignItems: "center",
+        borderBottom: 1, borderColor: "divider"
       }}
     >
-      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
-        <Tabs
-          value={value}
-          onChange={(event, newValue) => handleTabClick(event, newValue)}
-          aria-label="basic tabs example"
-          sx={{
-            "& .MuiTabs-indicator": { display: "none" },
-            marginLeft: 12, 
-          }}
-        >
-          <Tab
-            label="Home"
-            component={Link}
-            to="/"
-            onClick={(event) => handleTabClick(event, 0)}
-            sx={{ color: "black", flex: 1 }}
-            {...a11yProps(0)}
-          />
-          <Tab
-            label="About"
-            component={Link}
-            to="/about"
-            onClick={(event) => handleTabClick(event, 1)}
-            sx={{ color: "black", flex: 1 }}
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Contact"
-            component={Link}
-            to="/contact"
-            onClick={(event) => handleTabClick(event, 2)}
-            sx={{ color: "black", flex: 1 }}
-            {...a11yProps(2)}
-          />
-          <Tab
-            label="Shop"
-            aria-owns={open ? "simple-popover" : undefined}
-            aria-haspopup="true"
-            onClick={(event) => handleTabClick(event, 3)}
-            sx={{ color: "black", flex: 1 }}
-            {...a11yProps(3)}
-          />
-        </Tabs>
-      </Box>
+<Box
+  sx={{
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  }}
+>
+  <Tabs
+    value={value}
+    onChange={(event, newValue) => handleTabClick(event, newValue)}
+    aria-label="basic tabs example"
+    sx={{
+      "& .MuiTabs-indicator": { display: "none" },
+      width: "100%",
+      maxWidth: "600px", // Set a maximum width if needed
+    }}
+  >
+    <Tab
+      label="Home"
+      component={Link}
+      to="/"
+      onClick={(event) => handleTabClick(event, 0)}
+      sx={{ color: "black", flex: 1 }}
+      {...a11yProps(0)}
+    />
+    <Tab
+      label="About"
+      component={Link}
+      to="/about"
+      onClick={(event) => handleTabClick(event, 1)}
+      sx={{ color: "black", flex: 1 }}
+      {...a11yProps(1)}
+    />
+    <Tab
+      label="Contact"
+      component={Link}
+      to="/contact"
+      onClick={(event) => handleTabClick(event, 2)}
+      sx={{ color: "black", flex: 1 }}
+      {...a11yProps(2)}
+    />
+    <Tab
+      label="Shop"
+      aria-owns={open ? "simple-popover" : undefined}
+      aria-haspopup="true"
+      onClick={(event) => handleTabClick(event, 3)}
+      sx={{ color: "black", flex: 1 }}
+      {...a11yProps(3)}
+    />
+  </Tabs>
+</Box>
+
       <Popover
         id={id}
         open={open}

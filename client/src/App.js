@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   ApolloClient,
@@ -44,6 +44,9 @@ client.clearStore();
 
 // Main component representing the app
 function App() {
+  useEffect(() => {
+    document.title = "Chirs Verges Art"
+  }, [])
   return (
     <ApolloProvider client={client}>
       <Router>

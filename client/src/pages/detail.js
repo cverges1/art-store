@@ -5,10 +5,9 @@ import { QUERY_SINGLE_PROD } from "../utils/queries";
 import Card from "@mui/material/Card";
 import SingleProduct from "../components/SingleProd";
 import CartButtons from "../components/Buttons";
-import { useStoreContext } from "../utils/GlobalState";
+import Grid from "@mui/system/Unstable_Grid/Grid";
+
 export default function Detail() {
-  const [state, dispatch] = useStoreContext();
-  const { currentProduct } = state;
 
   const { id } = useParams();
 
@@ -35,6 +34,9 @@ export default function Detail() {
   console.log("product",product)
 
   return (
+    <Grid container spacing={2} justifyContent="center" margin={4}>
+            <Grid key={product._id} item xs={12} sm={9} md={6} lg={5}>
+
     <div
       style={{
         display: "flex",
@@ -48,6 +50,10 @@ export default function Detail() {
           display: "flex",
           flexDirection: "column",
           mt: -12,
+          backgroundColor: (theme) =>
+          theme.palette.mode === "light"
+            ? theme.palette.grey[200]
+            : theme.palette.grey[700],
         }}
       >
         <React.Fragment>
@@ -70,5 +76,7 @@ export default function Detail() {
         </React.Fragment>
       </Card>
     </div>
+    </Grid>
+    </Grid>
   );
 }

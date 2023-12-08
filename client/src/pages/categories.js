@@ -100,29 +100,35 @@ export default function Categories() {
             display: "flex",
             justifyContent: "center",
             borderColor: "divider",
-            margin: "1",
           }}
         >
-          <Typography marginBottom={6}>
+          <Typography>
             <h1>{products[0].categoryID.categoryName}</h1>
           </Typography>
         </Box>
-        <Grid container spacing={2} justifyContent="center" margin={4}>
+        <Grid container spacing={2} justifyContent="center" margin={5}>
           {products.map((product) => (
-            <Grid key={product._id} item xs={12} sm={9} md={6} lg={5}>
+            <Grid key={product._id} item xs={12} sm={9} md={6} lg={5}   sx={{
+              "&:hover": {
+                transform: "translateY(-5px)",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              },
+            }} >
             <div
               style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginBottom: 100,
               }}
             >
               <Card
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  mt: -12,
+                  backgroundColor: (theme) =>
+                  theme.palette.mode === "light"
+                    ? theme.palette.grey[200]
+                    : theme.palette.grey[700],
                 }}
               >
                 <React.Fragment key={product._id}>

@@ -7,7 +7,9 @@ import CartItem from "../CartItem";
 import { useStoreContext } from "../../utils/GlobalState";
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
 import "./style.css";
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
 
 // stripePromise returns a promise with the stripe object as soon as the Stripe package loads
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
@@ -77,10 +79,25 @@ const Cart = () => {
 
   return (
     <div className="cart">
-      <div className="close" onClick={toggleCart}>
-        [X]
+      <div className="close">
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            backgroundColor: "black",
+            "&:hover": {
+              backgroundColor: "white",
+              color: "black",
+            },
+          }}
+          onClick={toggleCart}
+        >
+          X
+        </Button>
       </div>
-      <h2>Shopping Cart</h2>
+      <Typography>
+        <h2>Shopping Cart</h2>
+      </Typography>
       {state.cart.length ? (
         <div>
           {state.cart.map((item) => (
@@ -89,16 +106,26 @@ const Cart = () => {
 
           <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
-            <button onClick={submitCheckout}>Checkout</button>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "black",
+                "&:hover": {
+                  backgroundColor: "white",
+                  color: "black",
+                },
+              }}
+              onClick={submitCheckout}
+            >
+              CHECKOUT
+            </Button>
           </div>
         </div>
       ) : (
-        <h3>
-          <span role="img" aria-label="shocked">
-            😱
-          </span>
-          You haven't added anything to your cart yet!
-        </h3>
+        <Typography>
+          <h3>You haven't added anything to your cart yet!</h3>
+        </Typography>
       )}
     </div>
   );

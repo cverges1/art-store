@@ -1,5 +1,4 @@
 import React from "react";
-import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -33,7 +32,12 @@ export default function SingleProduct(item) {
         sx={{ minWidth: "75vw", maxHeight: "50vh" }}
       />
       <Box>
-        <CardContent>
+        <CardContent         sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[200]
+              : theme.palette.grey[700],
+        }}>
           <Typography
             variant="subtitle"
             color="text.secondary"
