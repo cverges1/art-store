@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_PROD } from "../utils/queries";
 import SingleProduct from "../components/SingleProd";
+import CartButtons from "../components/Buttons";
 
 export default function Detail() {
-
   const { id } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_SINGLE_PROD, {
@@ -29,15 +29,23 @@ export default function Detail() {
   }
 
   return (
-    <div key={product._id}>
-    <SingleProduct
-    _id={product._id}
-    name={product.name}
-    image={product.image}
-    price={product.price}
-    quantity={product.quantity}
-    description={product.description}
-  /> 
-    </div>
- );
+    <>
+      <SingleProduct
+        _id={product._id}
+        name={product.name}
+        image={product.image}
+        price={product.price}
+        quantity={product.quantity}
+        description={product.description}
+      />
+      <CartButtons
+        _id={product._id}
+        name={product.name}
+        image={product.image}
+        price={product.price}
+        quantity={product.quantity}
+        description={product.description}
+      />
+    </>
+  );
 }

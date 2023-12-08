@@ -6,18 +6,19 @@ import GlobalStyles from "@mui/material/GlobalStyles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { QUERY_PRODUCTS } from "../../utils/queries";
-import { useStoreContext } from "../../utils/GlobalState";
-import SingleProduct from "../SingleProd";
-import ContactCard from "../ContactCard";
+import { QUERY_PRODUCTS } from "../utils/queries";
+import { useStoreContext } from "../utils/GlobalState";
+import SingleProduct from "../components/SingleProd";
+import ContactCard from "../components/ContactCard";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Card from "@mui/material/Card";
 import { Link } from "react-router-dom";
+import CartButtons from "../components/Buttons";
 
 const defaultTheme = createTheme();
 
-export default function Pricing() {
+export default function Categories() {
   const [state, dispatch] = useStoreContext();
   const { currentCategory } = state;
   const { id } = useParams();
@@ -26,7 +27,6 @@ export default function Pricing() {
     variables: { categoryId: id },
   });
 
-  
   if (loading) {
     // Initial loading state
     return <p>Loading...</p>;
@@ -36,12 +36,10 @@ export default function Pricing() {
     console.log("Error fetching product", error);
     return <p>Error: {error.message}</p>;
   }
-
-  console.log(data.products)
-
+  
   const products = data.products;
 
-  if (currentCategory === 'commissions' || products.length <= 0) {
+  if (currentCategory === "commissions" || products.length <= 0) {
     return (
       <ThemeProvider theme={defaultTheme}>
         <Typography sx={{ textAlign: "center" }}>
@@ -104,24 +102,33 @@ export default function Pricing() {
           }}
         >
           <Typography>
-            <h1>
-              {products[0].categoryID.categoryName}
-            </h1>
+            <h1>{products[0].categoryID.categoryName}</h1>
           </Typography>
         </Box>
 
         {products.map((product) => (
-          <Link key={product._id}
-          to={`/product/${product._id}`}>
-                    <SingleProduct
-            _id={product._id}
-            name={product.name}
-            image={product.image}
-            price={product.price}
-            quantity={product.quantity}
-            description={product.description}
-          />
-          </Link>
+          <Card>
+            <React.Fragment key={product._id}>
+              <Link to={`/product/${product._id}`}>
+                <SingleProduct
+                  _id={product._id}
+                  name={product.name}
+                  image={product.image}
+                  price={product.price}
+                  quantity={product.quantity}
+                  description={product.description}
+                />
+              </Link>
+              <CartButtons
+                _id={product._id}
+                name={product.name}
+                image={product.image}
+                price={product.price}
+                quantity={product.quantity}
+                description={product.description}
+              />
+            </React.Fragment>
+          </Card>
         ))}
       </ThemeProvider>
     );

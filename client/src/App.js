@@ -14,10 +14,9 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Nav from "./components/Nav";
 import StickyFooter from "./components/Footer";
-import ProductCard from "./components/ProductCard";
-import SingleProduct from "./components/SingleProd";
 import Header from "./components/header";
 import Detail from "./pages/detail";
+import Categories from "./pages/categories";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createHttpLink({
@@ -56,7 +55,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/category/:id" element={<ProductCard />} />
+              <Route path="/category/:id" element={<Categories />} />
               <Route path="/product/:id" element={<Detail />} />
             </Routes>
             <StickyFooter />

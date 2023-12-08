@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { CardHeader } from "@mui/material";
-import { idbPromise, pluralize } from "../../utils/helpers";
-import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
-import { useStoreContext } from "../../utils/GlobalState";
+import { pluralize } from "../../utils/helpers";
+
 
 export default function SingleProduct(item) {
-  const [state, dispatch] = useStoreContext();
 
   const {
     image,
@@ -23,46 +19,7 @@ export default function SingleProduct(item) {
     description
   } = item;
 
-  const { cart } = state;
-
-  // State for managing the quantity
-  const [number, setQuantity] = useState(1);
-
-  // Event handler for increasing quantity
-  const handleIncrease = () => {
-    setQuantity(number + 1);
-  };
-
-  // Event handler for decreasing quantity
-  const handleDecrease = () => {
-    if (number > 1) {
-      setQuantity(number - 1);
-    }
-  };
-
-  console.log(item)
   
-  const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === _id)
-    if (itemInCart) {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      });
-      idbPromise('cart', 'put', {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      });
-    } else {
-      dispatch({
-        type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: 1 }
-      });
-      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
-    }
-  }
-
   return (
     <div
       style={{
@@ -127,74 +84,6 @@ export default function SingleProduct(item) {
               {quantity} {pluralize("item", quantity)} in stock
             </Typography>
           </CardContent>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            justifyContent: "space-between",
-          }}
-        >
-          <CardActions>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "100%",
-                marginBottom: 2,
-              }}
-            >
-              {quantity > 1 && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "center",
-                    marginTop: 1, // Add marginTop to separate from the quantity buttons
-                  }}
-                >
-                  <Button
-                    onClick={() => handleDecrease(_id)}
-                    variant="contained"
-                    sx={{ width: "47.5%" }}
-                  >
-                    -
-                  </Button>
-                  <Box
-                    sx={{
-                      padding: "8px",
-                      marginX: "2px",
-                      minWidth: "40px",
-                      textAlign: "center",
-                      border: "1px solid black",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <Typography>{number}</Typography>
-                  </Box>
-                  <Button
-                    onClick={() => handleIncrease(_id)}
-                    variant="contained"
-                    sx={{ width: "47.5%" }}
-                  >
-                    +
-                  </Button>
-                </Box>
-              )}
-              <Box sx={{ width: "100%" }}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={addToCart}
-                  sx={{ marginTop: 1 }} // Add marginTop to separate from the quantity buttons
-                >
-                  ADD TO CART
-                </Button>
-              </Box>
-            </Box>
-          </CardActions>
         </Box>
       </Card>
     </div>
