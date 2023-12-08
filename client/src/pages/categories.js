@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import GlobalStyles from "@mui/material/GlobalStyles";
+import Grid from "@mui/system/Unstable_Grid/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -36,8 +37,9 @@ export default function Categories() {
     console.log("Error fetching product", error);
     return <p>Error: {error.message}</p>;
   }
-  
+
   const products = data.products;
+  console.log(currentCategory);
 
   if (currentCategory === "commissions" || products.length <= 0) {
     return (
@@ -101,35 +103,56 @@ export default function Categories() {
             margin: "1",
           }}
         >
-          <Typography>
+          <Typography marginBottom={6}>
             <h1>{products[0].categoryID.categoryName}</h1>
           </Typography>
         </Box>
-
-        {products.map((product) => (
-          <Card>
-            <React.Fragment key={product._id}>
-              <Link to={`/product/${product._id}`}>
-                <SingleProduct
-                  _id={product._id}
-                  name={product.name}
-                  image={product.image}
-                  price={product.price}
-                  quantity={product.quantity}
-                  description={product.description}
-                />
-              </Link>
-              <CartButtons
-                _id={product._id}
-                name={product.name}
-                image={product.image}
-                price={product.price}
-                quantity={product.quantity}
-                description={product.description}
-              />
-            </React.Fragment>
-          </Card>
-        ))}
+        <Grid container spacing={2} justifyContent="center" margin={4}>
+          {products.map((product) => (
+            <Grid key={product._id} item xs={12} sm={9} md={6} lg={5}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: 100,
+              }}
+            >
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  mt: -12,
+                }}
+              >
+                <React.Fragment key={product._id}>
+                  <Link
+                    to={`/product/${product._id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <SingleProduct
+                      _id={product._id}
+                      name={product.name}
+                      image={product.image}
+                      price={product.price}
+                      quantity={product.quantity}
+                      description={product.description}
+                    />
+                  </Link>
+                  <CartButtons
+                    _id={product._id}
+                    name={product.name}
+                    image={product.image}
+                    price={product.price}
+                    quantity={product.quantity}
+                    description={product.description}
+                  />
+                </React.Fragment>
+              </Card>
+            </div>
+            </Grid>
+          ))}
+        </Grid>
       </ThemeProvider>
     );
   }

@@ -37,6 +37,7 @@ query Product($subCategoryId: ID, $categoryId: ID, $name: String) {
 export const QUERY_SINGLE_PROD = gql`
 query SingProduct($id: ID!) {
   product(_id: $id) {
+    _id
     name
     image
     description
