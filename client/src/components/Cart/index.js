@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_CHECKOUT } from "../../utils/queries";
@@ -11,15 +11,13 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 
-// stripePromise returns a promise with the stripe object as soon as the Stripe package loads
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const cartRef = useRef(null);
 
-  // We check to see if there is a data object that exists, if so this means that a checkout session was returned from the backend
-  // Then we should redirect to the checkout with a reference to our session id
   useEffect(() => {
     if (data) {
       stripePromise.then((res) => {
@@ -28,8 +26,6 @@ const Cart = () => {
     }
   }, [data]);
 
-  // If the cart's length or if the dispatch function is updated, check to see if the cart is empty.
-  // If so, invoke the getCart method and populate the cart with the existing from the session
   useEffect(() => {
     async function getCart() {
       const cart = await idbPromise("cart", "get");
@@ -41,9 +37,24 @@ const Cart = () => {
     }
   }, [state.cart.length, dispatch]);
 
-  function toggleCart() {
+  const toggleCart = () => {
     dispatch({ type: TOGGLE_CART });
-  }
+  };
+
+  const handleClickOutside = (event) => {
+    if (cartRef.current && !cartRef.current.contains(event.target)) {
+      // Clicked outside the cart, close it
+      toggleCart();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   function calculateTotal() {
     let sum = 0;
@@ -53,8 +64,6 @@ const Cart = () => {
     return sum.toFixed(2);
   }
 
-  // When the submit checkout method is invoked, loop through each item in the cart
-  // Add each item id to the productIds array and then invoke the getCheckout query passing an object containing the id for all our products
   function submitCheckout() {
     const productIds = [];
 
@@ -78,7 +87,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="cart" style={{ zIndex: 9999 }}>
+    <div className="cart" ref={cartRef} style={{ zIndex: 9999 }}>
       <div className="close">
         <Button
           variant="contained"
