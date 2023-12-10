@@ -58,17 +58,34 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: "orders.products",
-          populate: "category",
-        });
-
-        return user.orders.id(_id);
+      try {
+        let order;
+    
+        // Check if the user is logged in
+        if (context.user) {
+          // If logged in, retrieve the user's orders
+          const user = await User.findById(context.user._id).populate({
+            path: "orders.products",
+            populate: "category",
+          });
+    
+          order = user.orders.id(_id);
+        } else {
+          // If not logged in, look up the order by _id directly
+          order = await Order.findById(_id).populate("products");
+        }
+    
+        // Check if the order exists
+        if (order) {
+          return order;
+        } else {
+          throw new Error("Order not found");
+        }
+      } catch (err) {
+        console.error(err);
+        throw new Error("Error fetching order");
       }
-
-      throw new AuthenticationError("Not logged in");
-    },
+    },    
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
@@ -103,6 +120,17 @@ const resolvers = {
         cancel_url: `${url}/`,
       });
 
+      if (context.user) {
+        // User is logged in, associate the order and session with the user
+        const user = await User.findById(context.user._id);
+        user.orders.push(order);
+        await user.save();
+      } else {
+        // User is not logged in, you can handle this case as needed
+        // For example, you might want to store the order/session details
+        // in a separate collection or in local storage for guest users
+      }
+
       return { session: session.id };
     },
   },
@@ -122,18 +150,27 @@ const resolvers = {
     },
     // Add an order
     addOrder: async (parent, { products }, context) => {
-      if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user_id, {
-          $push: { orders: order },
-        });
-
+      try {
+        let order;
+    
+        // Check if the user is logged in
+        if (context.user) {
+          // If logged in, create an order and push it to the user's orders array
+          order = new Order({ products });
+          await User.findByIdAndUpdate(context.user_id, {
+            $push: { orders: order },
+          });
+        } else {
+          // If not logged in, create an order and save it directly to the database
+          order = await Order.create({ products });
+        }
+    
         return order;
+      } catch (err) {
+        console.error(err);
+        throw new Error("Error adding order");
       }
-
-      throw new AuthenticationError("You are not logged in");
-    },
+    },    
     // Update a user
     updateUser: async (parent, args, context) => {
       if (context.user) {
@@ -148,7 +185,11 @@ const resolvers = {
     updateProduct: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
 
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+      return await Product.findByIdAndUpdate(
+        _id,
+        { $inc: { quantity: decrement } },
+        { new: true }
+      );
     },
     // Allows users to login
     login: async (parent, { email, password }) => {

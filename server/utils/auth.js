@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const secret = "some secret";
-
 module.exports = {
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
@@ -10,8 +8,6 @@ module.exports = {
     if (req.headers.authorization) {
       token = token.split(' ').pop().trim();
     }
-
-    console.log('Received token:', token);
 
     if (!token) {
       return req;
@@ -31,9 +27,7 @@ module.exports = {
   signToken: function ({ firstName, lastName, email, _id }) {
     const payload = { firstName, lastName, email, _id };
 
-    console.log('auth',process.env.SECRET)
-
-    return jwt.sign({ data: payload }, secret, {
+    return jwt.sign({ data: payload }, process.env.SECRET, {
       expiresIn: '2h',
     });
   },
