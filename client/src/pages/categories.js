@@ -20,7 +20,7 @@ import CartButtons from "../components/Buttons";
 const defaultTheme = createTheme();
 
 export default function Categories() {
-  const [state, dispatch] = useStoreContext();
+  const [state] = useStoreContext();
   const { currentCategory } = state;
   const { id } = useParams();
 
@@ -46,7 +46,7 @@ export default function Categories() {
         <Typography sx={{ textAlign: "center" }}>
           <Card>
             <CardHeader
-              title="Commissions"
+              title="Art Commissions"
               subheader={
                 <div>
                   Have a specific idea that you would like to have made? You've
