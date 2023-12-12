@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_CHECKOUT } from "../../utils/queries";
-import { idbPromise } from "../../utils/helpers";
+import { idbPromise, mergeCarts } from "../../utils/helpers";
 import CartItem from "../CartItem";
 import { useStoreContext } from "../../utils/GlobalState";
 import {
@@ -34,14 +34,17 @@ const Cart = () => {
 
   useEffect(() => {
     async function getCart() {
-      const cart = await idbPromise("cart", "get");
-      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+      const cartFromIdb = await idbPromise("cart", "get");
+      if (cartFromIdb && cartFromIdb.length && !state.cart.length) {
+        const mergedCarts = mergeCarts(state.cart, cartFromIdb);
+        dispatch({ type: ADD_MULTIPLE_TO_CART, products: mergedCarts });
+      }
     }
 
     if (!state.cart.length) {
       getCart();
     }
-  }, [state.cart.length, dispatch]);
+  }, [state.cart, dispatch]);
 
   const toggleCart = () => {
     dispatch({ type: TOGGLE_CART });
@@ -60,7 +63,7 @@ const Cart = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  });
 
   function calculateTotal() {
     let sum = 0;

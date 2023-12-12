@@ -26,7 +26,7 @@ export function idbPromise(storeName, method, object) {
       store = tx.objectStore(storeName);
 
       tx.onerror = function (e) {
-        console.log('Transaction error:', e.target.error);
+        console.log("Transaction error:", e.target.error);
         reject(e.target.error);
       };
 
@@ -62,4 +62,22 @@ export function idbPromise(storeName, method, object) {
       };
     };
   });
+}
+
+export function mergeCarts(existingCart, newCart) {
+  const mergedCart = [...existingCart];
+
+  newCart.forEach((newCartItem) => {
+    const existingCartItemIndex = existingCart.findIndex(
+      (existingCartItem) => existingCartItem._id === newCartItem._id
+    );
+
+    if (existingCartItemIndex !== -1) {
+      mergedCart[existingCartItemIndex].purchaseQuantity +=
+        newCartItem.purchaseQuantity;
+    } else {
+      mergedCart.push(newCartItem);
+    }
+  });
+  return mergedCart;
 }
