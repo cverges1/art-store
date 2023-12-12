@@ -4,6 +4,18 @@ const { User, SubCategory, Product, Category, Order } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
 
+const decrementProductQuantities = async (products) => {
+  try {
+    for (const productId of products) {
+      // Decrement the quantity of each product by 1
+      await Product.findByIdAndUpdate(productId, { $inc: { quantity: -1 } });
+    }
+  } catch (error) {
+    console.error("Error decrementing product quantities:", error);
+    throw new Error("Error during product quantity update");
+  }
+};
+
 const resolvers = {
   Query: {
     // Get all categories
@@ -60,7 +72,7 @@ const resolvers = {
     order: async (parent, { _id }, context) => {
       try {
         let order;
-    
+
         // Check if the user is logged in
         if (context.user) {
           // If logged in, retrieve the user's orders
@@ -68,13 +80,13 @@ const resolvers = {
             path: "orders.products",
             populate: "category",
           });
-    
+
           order = user.orders.id(_id);
         } else {
           // If not logged in, look up the order by _id directly
           order = await Order.findById(_id).populate("products");
         }
-    
+
         // Check if the order exists
         if (order) {
           return order;
@@ -85,7 +97,7 @@ const resolvers = {
         console.error(err);
         throw new Error("Error fetching order");
       }
-    },    
+    },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
@@ -120,6 +132,9 @@ const resolvers = {
         cancel_url: `${url}/`,
       });
 
+      // Decrement product quantities after successful checkout
+      await decrementProductQuantities(args.products);
+
       if (context.user) {
         // User is logged in, associate the order and session with the user
         const user = await User.findById(context.user._id);
@@ -152,7 +167,7 @@ const resolvers = {
     addOrder: async (parent, { products }, context) => {
       try {
         let order;
-    
+
         // Check if the user is logged in
         if (context.user) {
           // If logged in, create an order and push it to the user's orders array
@@ -164,13 +179,13 @@ const resolvers = {
           // If not logged in, create an order and save it directly to the database
           order = await Order.create({ products });
         }
-    
+
         return order;
       } catch (err) {
         console.error(err);
         throw new Error("Error adding order");
       }
-    },    
+    },
     // Update a user
     updateUser: async (parent, args, context) => {
       if (context.user) {

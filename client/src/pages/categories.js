@@ -2,9 +2,7 @@ import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import GlobalStyles from "@mui/material/GlobalStyles";
 import Grid from "@mui/system/Unstable_Grid/Grid";
-import CssBaseline from "@mui/material/CssBaseline";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../utils/queries";
@@ -40,7 +38,7 @@ export default function Categories() {
 
   const products = data.products;
 
-  if (currentCategory === "commissions" || products.length <= 0) {
+  if (currentCategory === "art commissions" || products.length <= 0) {
     return (
       <ThemeProvider theme={defaultTheme}>
         <Typography sx={{ textAlign: "center" }}>
@@ -87,11 +85,6 @@ export default function Categories() {
   } else {
     return (
       <ThemeProvider theme={defaultTheme}>
-        <GlobalStyles
-          styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }}
-        />
-        <CssBaseline />
-
         <Box
           sx={{
             width: "100%",
@@ -106,54 +99,68 @@ export default function Categories() {
         </Box>
         <Grid container spacing={2} justifyContent="center" margin={5}>
           {products.map((product) => (
-            <Grid key={product._id} item xs={12} sm={9} md={6} lg={5}   sx={{
-              "&:hover": {
-                transform: "translateY(-5px)",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-              },
-            }} >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+            <Grid
+              key={product._id}
+              item
+              xs={12}
+              sm={9}
+              md={6}
+              lg={5}
+              sx={{
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                },
               }}
             >
-              <Card
-                sx={{
+              <div
+                style={{
                   display: "flex",
-                  flexDirection: "column",
-                  backgroundColor: (theme) =>
-                  theme.palette.mode === "light"
-                    ? theme.palette.grey[200]
-                    : theme.palette.grey[700],
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <React.Fragment key={product._id}>
-                  <Link
-                    to={`/product/${product._id}`}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
-                    <SingleProduct
-                      _id={product._id}
-                      name={product.name}
-                      image={product.image}
-                      price={product.price}
-                      quantity={product.quantity}
-                      description={product.description}
-                    />
-                  </Link>
-                  <CartButtons
-                    _id={product._id}
-                    name={product.name}
-                    image={product.image}
-                    price={product.price}
-                    quantity={product.quantity}
-                    description={product.description}
-                  />
-                </React.Fragment>
-              </Card>
-            </div>
+                <Card
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === "light"
+                        ? theme.palette.grey[200]
+                        : theme.palette.grey[700],
+                  }}
+                >
+                  <React.Fragment key={product._id}>
+                    <Link
+                      to={`/product/${product._id}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      <SingleProduct
+                        _id={product._id}
+                        name={product.name}
+                        image={product.image}
+                        price={product.price}
+                        quantity={product.quantity}
+                        description={product.description}
+                      />
+                    </Link>
+                    {product.quantity > 0 ? (
+                      <CartButtons
+                        _id={product._id}
+                        name={product.name}
+                        image={product.image}
+                        price={product.price}
+                        quantity={product.quantity}
+                        description={product.description}
+                      />
+                    ) : (
+                      <Typography sx={{textAlign: "center", backgroundColor: "#666666", color: "white" }}>
+                        <h3>Product Unavailable</h3>
+                      </Typography>
+                    )}
+                  </React.Fragment>
+                </Card>
+              </div>
             </Grid>
           ))}
         </Grid>
