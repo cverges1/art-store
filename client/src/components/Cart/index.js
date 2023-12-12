@@ -5,13 +5,19 @@ import { QUERY_CHECKOUT } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import CartItem from "../CartItem";
 import { useStoreContext } from "../../utils/GlobalState";
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
+import {
+  TOGGLE_CART,
+  ADD_MULTIPLE_TO_CART,
+  UPDATE_PRODUCTS,
+} from "../../utils/actions";
 import "./style.css";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 
-const stripePromise = loadStripe("pk_test_51NiT64KX9mdrTXyFdXKmMXHGGQBHwmAYEAJvsJE6hqNa3cq6Edu6SlY0FMODhuABzA2dyl05cjOaM6IhgT43QTzf00OW2DDOfp");
+const stripePromise = loadStripe(
+  "pk_test_51NiT64KX9mdrTXyFdXKmMXHGGQBHwmAYEAJvsJE6hqNa3cq6Edu6SlY0FMODhuABzA2dyl05cjOaM6IhgT43QTzf00OW2DDOfp"
+);
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
@@ -75,7 +81,17 @@ const Cart = () => {
 
     getCheckout({
       variables: { products: productIds },
-    });
+    })
+      .then((response) => {
+        if (response.success) {
+          dispatch({ type: UPDATE_PRODUCTS });
+        } else {
+          console.error("Checkout failed:", response.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during checkout:", error);
+      });
   }
 
   if (!state.cartOpen) {
@@ -104,7 +120,7 @@ const Cart = () => {
           X
         </Button>
       </div>
-      <Typography>
+      <Typography sx={{ margin: 5 }}>
         <h2>Shopping Cart</h2>
       </Typography>
       {state.cart.length ? (
@@ -113,22 +129,44 @@ const Cart = () => {
             <CartItem key={item._id} item={item} />
           ))}
 
-          <div className="flex-row space-between">
-            <strong>Total: ${calculateTotal()}</strong>
-            <Button
-              variant="contained"
-              color="primary"
+          <div
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              backgroundColor: "black",
+            }}
+          >
+            <div
               sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
                 backgroundColor: "black",
-                "&:hover": {
-                  backgroundColor: "white",
-                  color: "black",
-                },
               }}
-              onClick={submitCheckout}
             >
-              CHECKOUT
-            </Button>
+              <strong>Total: ${calculateTotal()}</strong>
+            </div>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  margin: 1,
+                  backgroundColor: "black",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
+                onClick={submitCheckout}
+              >
+                CHECKOUT
+              </Button>
+            </div>
           </div>
         </div>
       ) : (

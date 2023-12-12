@@ -6,6 +6,7 @@ import Card from "@mui/material/Card";
 import SingleProduct from "../components/SingleProd";
 import CartButtons from "../components/Buttons";
 import Grid from "@mui/system/Unstable_Grid/Grid";
+import Typography from "@mui/material/Typography";
 
 export default function Detail() {
 
@@ -63,14 +64,20 @@ export default function Detail() {
             quantity={product.quantity}
             description={product.description}
           />
-          <CartButtons
-            _id={product._id}
-            name={product.name}
-            image={product.image}
-            price={product.price}
-            quantity={product.quantity}
-            description={product.description}
-          />
+                    {product.quantity > 0 ? (
+                      <CartButtons
+                        _id={product._id}
+                        name={product.name}
+                        image={product.image}
+                        price={product.price}
+                        quantity={product.quantity}
+                        description={product.description}
+                      />
+                    ) : (
+                      <Typography sx={{textAlign: "center", backgroundColor: "#666666", color: "white" }}>
+                        <h3>Product Unavailable</h3>
+                      </Typography>
+                    )}
         </React.Fragment>
       </Card>
     </div>
