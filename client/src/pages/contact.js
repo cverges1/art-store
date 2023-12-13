@@ -10,6 +10,33 @@ import CardHeader from "@mui/material/CardHeader";
 const Contact = () => {
   return (
     <Container sx={{ mt: 1}}>
+            <Card sx={{ mb: 1}}>
+        <CardHeader
+          title="Email List"
+          subheader="Enter your name and email for promotions and to stay up to date on Chris' latest releases."
+          titleTypographyProps={{ align: "center" }}
+          subheaderTypographyProps={{
+            align: "center",
+          }}
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[200]
+                : theme.palette.grey[700],
+          }}
+        />
+        <CardContent>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <EmailCard />
+          </Box>
+        </CardContent>
+      </Card>
       <Card>
         <CardHeader
           title="Contact the Artist"
@@ -25,44 +52,15 @@ const Contact = () => {
                 : theme.palette.grey[700],
           }}
         />
-        <CardContent sx={{ padding: 0 }}>
+        <CardContent>
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              mb: 2,
             }}
           >
             <ContactCard />
-          </Box>
-        </CardContent>
-      </Card>
-      <Card sx={{ mt: 1}}>
-        <CardHeader
-          title="Email List"
-          subheader="Enter your name and email to stay up to date on Chris' latest releases and artist updates"
-          titleTypographyProps={{ align: "center" }}
-          subheaderTypographyProps={{
-            align: "center",
-          }}
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[200]
-                : theme.palette.grey[700],
-          }}
-        />
-        <CardContent sx={{ padding: 0 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mb: 2,
-            }}
-          >
-            <EmailCard />
           </Box>
         </CardContent>
       </Card>
