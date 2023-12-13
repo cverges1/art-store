@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
+import { useMutation } from '@apollo/client';
+import { UPDATE_PRODUCT_QUANTITY } from '../../utils/mutations'
 
 export default function CartButtons(item) {
   const [state, dispatch] = useStoreContext();
@@ -16,6 +18,8 @@ export default function CartButtons(item) {
 
   // State for managing the quantity
   const [number, setQuantity] = useState(1);
+
+  const [updateProduct] = useMutation(UPDATE_PRODUCT_QUANTITY);
 
   // Event handler for increasing quantity
   const handleIncrease = () => {
@@ -31,25 +35,44 @@ export default function CartButtons(item) {
     }
   };
 
-  const addToCart = () => {
-    const itemInCartIndex = cart.findIndex((cartItem) => cartItem._id === _id);
-
-    if (itemInCartIndex !== -1) {
-      // If item is already in the cart, update the quantity
-      const updatedCart = [...cart];
-      updatedCart[itemInCartIndex].purchaseQuantity += number;
-
-      dispatch({ type: UPDATE_CART_QUANTITY, cart: updatedCart });
-      idbPromise("cart", "put", { ...updatedCart[itemInCartIndex] });
-    } else {
-      // If item is not in the cart, add it
-      dispatch({
-        type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: number },
-      });
-      idbPromise("cart", "put", { ...item, purchaseQuantity: number });
+  const addToCart = async () => {
+    try {
+      const itemInCartIndex = cart.findIndex((cartItem) => cartItem._id === _id);
+  
+      if (itemInCartIndex !== -1) {
+        const updatedCart = [...cart];
+        updatedCart[itemInCartIndex].purchaseQuantity += number;
+  
+        // Call the updateProduct mutation
+        await updateProduct({
+          variables: {
+            id: _id,
+            quantity: -number, // Pass the negative quantity to decrease
+          },
+        });
+  
+        dispatch({ type: UPDATE_CART_QUANTITY, cart: updatedCart });
+        idbPromise("cart", "put", { ...updatedCart[itemInCartIndex] });
+      } else {
+        // Call the updateProduct mutation before adding to cart
+        await updateProduct({
+          variables: {
+            id: _id,
+            quantity: -number, // Pass the negative quantity to decrease
+          },
+        });
+  
+        dispatch({
+          type: ADD_TO_CART,
+          product: { ...item, purchaseQuantity: number },
+        });
+        idbPromise("cart", "put", { ...item, purchaseQuantity: number });
+      }
+    } catch (error) {
+      console.error("Error updating product quantity:", error);
     }
   };
+  
 
   return (
     <Box

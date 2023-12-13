@@ -45,5 +45,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 };
 
+
 // Initiate the Apollo Server with the typeDefs and Resolvers as parameters
 startApolloServer(typeDefs, resolvers);
