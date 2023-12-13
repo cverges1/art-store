@@ -4,18 +4,6 @@ const { User, SubCategory, Product, Category, Order } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
 
-const decrementProductQuantities = async (products) => {
-  try {
-    for (const productId of products) {
-      // Decrement the quantity of each product by 1
-      await Product.findByIdAndUpdate(productId, { $inc: { quantity: -1 } });
-    }
-  } catch (error) {
-    console.error("Error decrementing product quantities:", error);
-    throw new Error("Error during product quantity update");
-  }
-};
-
 const resolvers = {
   Query: {
     // Get all categories
@@ -109,8 +97,8 @@ const resolvers = {
         const product = await stripe.products.create({
           name: products[i].name,
           description: products[i].description,
-          images: [`${url}/images/${products[i].image}`],
-        });
+          images: [`${url}/images/${encodeURIComponent(products[i].image)}`],
+        });        
 
         const price = await stripe.prices.create({
           product: product.id,
@@ -131,20 +119,6 @@ const resolvers = {
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
       });
-
-      // Decrement product quantities after successful checkout
-      await decrementProductQuantities(args.products);
-
-      if (context.user) {
-        // User is logged in, associate the order and session with the user
-        const user = await User.findById(context.user._id);
-        user.orders.push(order);
-        await user.save();
-      } else {
-        // User is not logged in, you can handle this case as needed
-        // For example, you might want to store the order/session details
-        // in a separate collection or in local storage for guest users
-      }
 
       return { session: session.id };
     },
@@ -198,11 +172,9 @@ const resolvers = {
     },
     // Update a Product
     updateProduct: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
-
       return await Product.findByIdAndUpdate(
         _id,
-        { $inc: { quantity: decrement } },
+        { $inc: { quantity: quantity } },
         { new: true }
       );
     },

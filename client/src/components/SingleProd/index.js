@@ -28,7 +28,7 @@ export default function SingleProduct(item) {
       />
       <CardMedia
         component="img"
-        alt={`${name}`}
+        alt={{name}}
         src={`/images/${image}`}
         sx={{ minWidth: "75vw", maxHeight: "50vh" }}
       />
