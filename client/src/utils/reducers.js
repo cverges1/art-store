@@ -27,11 +27,11 @@ export const reducer = (state, action) => {
         cartOpen: true,
         cart: [...state.cart, action.product],
       };
-    case ADD_MULTIPLE_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, ...action.products],
-      };
+      case ADD_MULTIPLE_TO_CART:
+        return {
+          ...state,
+          cart: action.products,
+        };
     // Returns a copy of state, sets the cartOpen to true and maps through the items in the cart.
     // If the item's `id` matches the `id` that was provided in the action.payload, we update the purchase quantity.
     case UPDATE_CART_QUANTITY:
