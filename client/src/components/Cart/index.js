@@ -109,21 +109,24 @@ const Cart = () => {
     <div className="cart" ref={cartRef} style={{ zIndex: 9999 }}>
       <div className="close">
         <Button
-          variant="contained"
-          color="primary"
+          variant="outlined"
           sx={{
-            backgroundColor: "black",
+            color: "black",
+            borderColor: "black", 
+            backgroundColor: "white",
             "&:hover": {
-              backgroundColor: "white",
-              color: "black",
+              borderColor: "white", 
+              backgroundColor: "black",
+              color: "white",
             },
+            transform: "scale(0.8)",
           }}
           onClick={toggleCart}
         >
           X
         </Button>
       </div>
-      <Typography sx={{ margin: 5 }}>
+      <Typography>
         <h2>Shopping Cart</h2>
       </Typography>
       {state.cart.length ? (

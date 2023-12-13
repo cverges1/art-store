@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   ApolloClient,
@@ -22,7 +22,7 @@ import Success from "./pages/Success";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "/graphql",
 });
 
 // Set up authentication headers for Apollo Client
@@ -46,9 +46,6 @@ client.clearStore();
 
 // Main component representing the app
 function App() {
-  useEffect(() => {
-    document.title = "Chirs Verges Art";
-  }, []);
   return (
     <ApolloProvider client={client}>
       <Router>

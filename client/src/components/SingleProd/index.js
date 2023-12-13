@@ -12,6 +12,7 @@ export default function SingleProduct(item) {
   return (
     <>
       <CardHeader
+      key={_id}
         title={
           <Typography variant="h4" align="center">
             {item.name}
