@@ -1,13 +1,13 @@
-// Importing our dependencies and all middleware
+// Importing our dependencies
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
-const { authMiddleware } = require('./utils/auth');
 
 // Importing our typeDefs and resolvers
 // Establishing our db connection
 const { typeDefs, resolvers } = require('./schemas');
-const db = require('./config/connection');
+const { authMiddleware } = require('./utils/auth');
+const{ connection, gridConnect }= require('./config/connection');
 
 // Here we state the local host PORT we will be using
 const PORT = process.env.PORT || 3001;
@@ -15,7 +15,8 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  csrfPrevention: true,
+  context: {authMiddleware, gridConnect},
 });
 
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +36,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
 
-  db.once('open', () => {
+  connection.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(

@@ -1,32 +1,42 @@
 const { gql } = require('apollo-server-express');
+const {
+  graphqlUploadExpress, // A Koa implementation is also exported.
+} = require("graphql-upload-minimal");
+const { GraphQLUpload } = require("graphql-upload-minimal");
 
 const typeDefs = gql`
+scalar Upload
+
   type Category {
     _id: ID
     categoryName: String
-    categoryImage: String
+    categoryImage: Image
   }
+
   type SubCategory {
     _id: ID
     subCategoryName: String
   }
+
   type Product {
     _id: ID
     name: String
     description: String
     categoryID: Category
     subCategoryID: SubCategory
-    image: String
+    images: [Image] 
     price: Float
     salePrice: Float
     quantity: Int
     createdAt: String
   }
+
   type Order {
     _id: ID
     purchaseDate: String
     products: [Product]
   }
+
   type User {
     _id: ID
     firstName: String
@@ -34,9 +44,19 @@ const typeDefs = gql`
     email: String
     password: String
   }
+
   type Checkout {
     session: ID
   }
+
+  type Image { 
+    _id: ID
+    filename: String
+    mimetype: String
+    encoding: String
+    url: String 
+  }
+
   type Auth {
     token: ID
     user: User
@@ -52,6 +72,7 @@ const typeDefs = gql`
     user: User
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout
+    images: [Image]
   }
 
   type Mutation {
@@ -60,6 +81,7 @@ const typeDefs = gql`
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     updateProduct(_id: ID!, quantity: Int!): Product
     login(email: String!, password: String!): Auth
+    singleUpload(file: Upload!): Image 
   }
 `;
 

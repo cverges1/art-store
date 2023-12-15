@@ -21,10 +21,12 @@ const productSchema = new Schema({
         ref: 'SubCategory',
         required: true
     },
-    image: {
-        type: String,
-        required: true
-    },
+    images: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Image',  
+        },
+    ],
     price: {
         type: Number,
         default: false, 

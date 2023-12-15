@@ -2,7 +2,11 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = {
-  authMiddleware: function ({ req }) {
+  authMiddleware: async function ({ req }) {
+    if (!req || !req.headers) {
+      return req;
+    }
+    
     let token = req.body.token || req.query.token || req.headers.authorization;
 
     if (req.headers.authorization) {
@@ -10,7 +14,7 @@ module.exports = {
     }
 
     if (!token) {
-      return req;
+      return next();
     }
 
     try {
@@ -18,8 +22,20 @@ module.exports = {
         maxAge: process.env.EXPIRATION,
       });
       req.user = data;
+      
+      // Connect to MongoDB and initialize gridConnect
+      await client.connect();
+      const db = client.db('cv-art-store');
+      req.context = {
+        gridConnect: new GridFSBucket(db, {
+          bucketName: 'artworkImages',
+        }),
+      };
     } catch {
       console.log('Invalid token');
+    }finally {
+      // Close the MongoDB connection when done
+      await client.close();
     }
 
     return req;

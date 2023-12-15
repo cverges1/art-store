@@ -12,7 +12,7 @@ export default function SingleProduct(item) {
   return (
     <>
       <CardHeader
-      key={_id}
+        key={_id}
         title={
           <Typography variant="h4" align="center">
             {item.name}
@@ -28,17 +28,19 @@ export default function SingleProduct(item) {
       />
       <CardMedia
         component="img"
-        alt={{name}}
+        alt={{ name }}
         src={`/images/${image}`}
         sx={{ minWidth: "75vw", maxHeight: "50vh" }}
       />
       <Box>
-        <CardContent         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[200]
-              : theme.palette.grey[700],
-        }}>
+        <CardContent
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[200]
+                : theme.palette.grey[700],
+          }}
+        >
           <Typography
             variant="subtitle"
             color="text.secondary"

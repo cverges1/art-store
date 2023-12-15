@@ -1,10 +1,18 @@
 require("dotenv").config();
+const { createWriteStream } = require("fs");
+const { GridFSBucket } = require("mongodb");
+const {
+  graphqlUploadExpress, // A Koa implementation is also exported.
+} = require("graphql-upload-minimal");
+const { GraphQLUpload } = require("graphql-upload-minimal");
+const { ObjectID } = require("mongodb");
 const { AuthenticationError } = require("apollo-server-express");
 const { User, SubCategory, Product, Category, Order } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
 
 const resolvers = {
+  Upload: GraphQLUpload,
   Query: {
     // Get all categories
     categories: async (parent, args, context) => {
@@ -38,7 +46,11 @@ const resolvers = {
       }
       return await Product.find(params)
         .sort({ createdAt: -1 })
-        .populate([{ path: "categoryID" }, { path: "subCategoryID" }]);
+        .populate([
+          { path: "categoryID" },
+          { path: "subCategoryID" },
+          { path: "images" },
+        ]);
     },
     // Get single product by ID
     product: async (parent, { _id }) => {
@@ -98,7 +110,7 @@ const resolvers = {
           name: products[i].name,
           description: products[i].description,
           images: [`${url}/images/${encodeURIComponent(products[i].image)}`],
-        });        
+        });
 
         const price = await stripe.prices.create({
           product: product.id,
@@ -176,7 +188,7 @@ const resolvers = {
         _id,
         { $inc: { quantity: quantity } },
         { new: true }
-      );
+      ).populate("images");
     },
     // Allows users to login
     login: async (parent, { email, password }) => {
@@ -195,6 +207,58 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    singleUpload: async (parent, { file, productID }) => {
+      try {
+        const { createReadStream, filename, mimetype, encoding } = await file;
+
+        // Generate a unique ID for the image
+        const imageID = new ObjectID();
+
+        // Create a write stream to store the file in GridFS
+        const writeStream = gridConnect.openUploadStreamWithId(
+          imageID,
+          filename,
+          {
+            contentType: mimetype,
+          }
+        );
+
+        // Pipe the file stream to the GridFS write stream
+        await new Promise((resolve, reject) =>
+          createReadStream()
+            .pipe(writeStream)
+            .on("finish", resolve)
+            .on("error", reject)
+        );
+
+        // Create an Image document in your MongoDB collection
+        const image = await Image.create({
+          _id: imageID,
+          filename,
+          mimetype,
+          encoding,
+        });
+
+        // If productID is provided, associate the image with the specified product
+        if (productID) {
+          await Product.findByIdAndUpdate(productID, {
+            $push: { images: imageID },
+          });
+        }
+
+        // If categoryID is provided, associate the image with the specified category
+        if (categoryID) {
+          await Category.findByIdAndUpdate(categoryID, {
+            $push: { categoryImage: imageID },
+          });
+        }
+
+        return image;
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        throw new Error("Failed to upload file");
+      }
     },
   },
 };

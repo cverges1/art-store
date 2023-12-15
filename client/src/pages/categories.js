@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -14,6 +14,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Card from "@mui/material/Card";
 import { Link } from "react-router-dom";
 import CartButtons from "../components/Buttons";
+import ImageUploadForm from "../components/ImageUploadForm";
 
 const defaultTheme = createTheme();
 
@@ -22,7 +23,16 @@ export default function Categories() {
   const { currentCategory } = state;
   const { id } = useParams();
 
-  const { loading, error, data } = useQuery(QUERY_PRODUCTS, {
+    // State to force a re-render if needed
+    const [forceRerender, setForceRerender] = useState(false);
+
+    // Function to handle successful image uploads
+    function handleUploadSuccess(productId) {
+      // Set the state to force a re-render
+      setForceRerender(!forceRerender);
+    }
+
+  const { loading, error, data, refetch } = useQuery(QUERY_PRODUCTS, {
     variables: { categoryId: id },
   });
 
@@ -131,6 +141,15 @@ export default function Categories() {
                   }}
                 >
                   <React.Fragment key={product._id}>
+                  <ImageUploadForm
+                productId={product._id}
+                onUploadSuccess={() => {
+                  // Call the refetch function to fetch the updated data
+                  refetch();
+                  // Call the handleUploadSuccess function
+                  handleUploadSuccess(product._id);
+                }}
+              />
                     <Link
                       to={`/product/${product._id}`}
                       style={{ textDecoration: "none", color: "black" }}
