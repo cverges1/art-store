@@ -1,6 +1,7 @@
 // Importing our dependencies
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const { graphqlUploadExpress } = require('graphql-upload-minimal');
 const path = require('path');
 
 // Importing our typeDefs and resolvers
@@ -16,11 +17,13 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   csrfPrevention: true,
+  uploads: false,
   context: {authMiddleware, gridConnect},
 });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(graphqlUploadExpress());
 
 // When production is ran, app will be sent to the ../client/build folder
 if (process.env.NODE_ENV === 'production') {

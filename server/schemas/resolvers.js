@@ -208,7 +208,7 @@ const resolvers = {
 
       return { token, user };
     },
-    singleUpload: async (parent, { file, productID }) => {
+    singleUpload: async (parent, { file, productID, categoryID }) => {
       try {
         const { createReadStream, filename, mimetype, encoding } = await file;
 

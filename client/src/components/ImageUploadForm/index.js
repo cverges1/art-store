@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useMutation } from '@apollo/client';
+import { SINGLE_UPLOAD } from "../../utils/mutations";
 
-const ImageUploadForm = ({ productId, onUploadSuccess }) => {
+const ImageUploadForm = ({ productId, categoryId }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [singleUpload] = useMutation(SINGLE_UPLOAD);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -12,22 +14,18 @@ const ImageUploadForm = ({ productId, onUploadSuccess }) => {
     try {
       console.log("Selected file:", selectedFile);
 
-      const formData = new FormData();
-      formData.append("image", selectedFile);
-
-      // Upload the file to the server
-      const response = await axios.post(`/images/api/upload`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }
+      const { data } = await singleUpload({
+        variables: {
+          file: selectedFile,
+          productID: productId,
+          categoryID: categoryId,
+        },
       });
 
-      // Handle success (e.g., update UI, fetch updated product details)
-      console.log("Upload success:", response.data);
-      onUploadSuccess();
+      console.log("Upload response:", data.singleUpload);
     } catch (error) {
       // Handle error (e.g., show error message)
-      console.error("Upload failed:", error,);
+      console.error("Upload failed:", error);
     }
   };
 
