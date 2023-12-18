@@ -12,7 +12,7 @@ mongoose.connect(
 
 const connection = mongoose.connection;
 const gridConnect = new GridFSBucket(connection, {
-    bucketName: 'artworkImages',
+    bucketName: 'Image',
 });
 
 module.exports = { connection, gridConnect };
