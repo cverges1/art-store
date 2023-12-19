@@ -19,7 +19,7 @@ export const ADD_ORDER = gql`
         _id
         name
         description
-        image
+        images
         price
         quantity
         categoryID {
@@ -55,6 +55,18 @@ export const UPDATE_PRODUCT_QUANTITY = gql`
 mutation UpdateProduct($id: ID!, $quantity: Int!) {
   updateProduct(_id: $id, quantity: $quantity) {
     _id
+  }
+}
+`
+
+export const SINGLE_UPLOAD = gql`
+mutation SingleUpload($file: Upload!) {
+  singleUpload(file: $file){
+    _id
+    encoding
+    filename
+    mimetype
+    url
   }
 }
 `

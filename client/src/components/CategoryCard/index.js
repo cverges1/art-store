@@ -34,7 +34,7 @@ export default function CategorySection() {
                 component="img"
                 height="200"
                 src={`/images/${category.categoryImage}`}
-                alt="category image"
+                alt={category.categoryName}
               />
               <CardContent style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white' }}>
                 <Typography

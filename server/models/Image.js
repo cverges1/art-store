@@ -15,7 +15,6 @@ const imageSchema = new Schema({
   },
   url: {
     type: String,
-    required: true,
   },
   createdAt: {
     type: Date,

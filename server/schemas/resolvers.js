@@ -1,13 +1,18 @@
 require("dotenv").config();
 const { createWriteStream } = require("fs");
 const { GridFSBucket } = require("mongodb");
-const {
-  graphqlUploadExpress, // A Koa implementation is also exported.
-} = require("graphql-upload-minimal");
+const gridConnect = require("../config/connection").gridConnect;
 const { GraphQLUpload } = require("graphql-upload-minimal");
 const { ObjectID } = require("mongodb");
 const { AuthenticationError } = require("apollo-server-express");
-const { User, SubCategory, Product, Category, Order } = require("../models");
+const {
+  User,
+  SubCategory,
+  Product,
+  Category,
+  Order,
+  Image,
+} = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
 
@@ -208,21 +213,27 @@ const resolvers = {
 
       return { token, user };
     },
-    singleUpload: async (parent, { file, productID }) => {
+    // ...
+
+    singleUpload: async (parent, { file, productID, categoryID }) => {
       try {
+        console.log("file", file);
         const { createReadStream, filename, mimetype, encoding } = await file;
 
-        // Generate a unique ID for the image
-        const imageID = new ObjectID();
-
         // Create a write stream to store the file in GridFS
-        const writeStream = gridConnect.openUploadStreamWithId(
-          imageID,
-          filename,
-          {
-            contentType: mimetype,
-          }
-        );
+        const writeStream = gridConnect.openUploadStream(filename, {
+          contentType: mimetype,
+        });
+
+        console.log(writeStream)
+
+        writeStream.on("error", (error) => {
+          console.error("WriteStream Error:", error);
+        });
+
+        writeStream.on("finish", () => {
+          console.log("WriteStream Finished");
+        });
 
         // Pipe the file stream to the GridFS write stream
         await new Promise((resolve, reject) =>
@@ -232,27 +243,32 @@ const resolvers = {
             .on("error", reject)
         );
 
+        console.log("MongoDB Write Operation Finished");
+
         // Create an Image document in your MongoDB collection
         const image = await Image.create({
-          _id: imageID,
-          filename,
-          mimetype,
-          encoding,
+          filename: filename,
+          mimetype: mimetype,
+          encoding: encoding,
         });
+
+        console.log("Image document created:", image);
 
         // If productID is provided, associate the image with the specified product
         if (productID) {
           await Product.findByIdAndUpdate(productID, {
-            $push: { images: imageID },
+            $push: { image },
           });
         }
 
         // If categoryID is provided, associate the image with the specified category
         if (categoryID) {
           await Category.findByIdAndUpdate(categoryID, {
-            $push: { categoryImage: imageID },
+            $push: { image },
           });
         }
+
+        console.log("File upload successful");
 
         return image;
       } catch (error) {

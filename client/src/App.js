@@ -4,11 +4,10 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { StoreProvider } from "./utils/GlobalState";
-
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import Home from "./pages/home";
 import About from "./pages/about";
 import Contact from "./pages/contact";
@@ -21,8 +20,8 @@ import NoMatch from "./pages/NoMatch";
 import Success from "./pages/Success";
 
 // Create an HTTP link for GraphQL queries
-const httpLink = createHttpLink({
-  uri: "/graphql",
+const httpLink = createUploadLink({
+  uri: process.env.API_URI,
 });
 
 // Set up authentication headers for Apollo Client
@@ -32,6 +31,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
+      "Apollo-Require-Preflight": "true",
     },
   };
 });
