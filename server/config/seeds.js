@@ -1,8 +1,8 @@
 //importing our database connection
-const { connection }= require("./connection");
+const db = require("./connection");
 const { User, Product, Category, SubCategory } = require("../models");
 
-connection.once("open", async () => {
+db.once("open", async () => {
   await Category.deleteMany();
 
   const categories = await Category.insertMany([

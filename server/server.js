@@ -8,7 +8,7 @@ const path = require('path');
 // Establishing our db connection
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
-const{ connection, gridConnect }= require('./config/connection');
+const  connection = require('./config/connection');
 
 // Here we state the local host PORT we will be using
 const PORT = process.env.PORT || 3001;
@@ -18,7 +18,7 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: true,
   uploads: false,
-  context: {authMiddleware, gridConnect},
+  context: {authMiddleware},
 });
 
 app.use(express.urlencoded({ extended: false }));
