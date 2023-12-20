@@ -1,9 +1,7 @@
 require("dotenv").config();
-const { createWriteStream } = require("fs");
-const { GridFSBucket } = require("mongodb");
-const gridConnect = require("../config/connection").gridConnect;
+const { createReadStream } = require('fs');
 const { GraphQLUpload } = require("graphql-upload-minimal");
-const { ObjectID } = require("mongodb");
+const { v4: uuidv4 } = require('uuid');
 const { AuthenticationError } = require("apollo-server-express");
 const {
   User,
@@ -15,6 +13,13 @@ const {
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+  region: process.env.AWS_REGION,
+});
+
+const s3 = new AWS.S3();
 
 const resolvers = {
   Upload: GraphQLUpload,
@@ -217,42 +222,28 @@ const resolvers = {
 
     singleUpload: async (parent, { file, productID, categoryID }) => {
       try {
-        console.log("file", file);
         const { createReadStream, filename, mimetype, encoding } = await file;
 
-        // Create a write stream to store the file in GridFS
-        const writeStream = gridConnect.openUploadStream(filename, {
-          contentType: mimetype,
-        });
+        // Generate a unique key for the S3 object
+        const key = `uploads/${uuidv4()}-${filename}`;
 
-        console.log(writeStream)
+        // Upload the file to S3
+        const uploadParams = {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: key,
+          Body: createReadStream(),
+          ContentType: mimetype,
+        };
 
-        writeStream.on("error", (error) => {
-          console.error("WriteStream Error:", error);
-        });
+        const data = await s3.upload(uploadParams).promise();
 
-        writeStream.on("finish", () => {
-          console.log("WriteStream Finished");
-        });
-
-        // Pipe the file stream to the GridFS write stream
-        await new Promise((resolve, reject) =>
-          createReadStream()
-            .pipe(writeStream)
-            .on("finish", resolve)
-            .on("error", reject)
-        );
-
-        console.log("MongoDB Write Operation Finished");
-
-        // Create an Image document in your MongoDB collection
+        // Create an Image document in your MongoDB collection with S3 URL
         const image = await Image.create({
-          filename: filename,
-          mimetype: mimetype,
-          encoding: encoding,
+          filename,
+          mimetype,
+          encoding,
+          url: data.Location, // Store S3 URL
         });
-
-        console.log("Image document created:", image);
 
         // If productID is provided, associate the image with the specified product
         if (productID) {
@@ -268,12 +259,12 @@ const resolvers = {
           });
         }
 
-        console.log("File upload successful");
+        console.log('File upload successful');
 
         return image;
       } catch (error) {
-        console.error("Error uploading file:", error);
-        throw new Error("Failed to upload file");
+        console.error('Error uploading file:', error);
+        throw new Error('Failed to upload file');
       }
     },
   },

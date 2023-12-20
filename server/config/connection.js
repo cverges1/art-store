@@ -1,6 +1,5 @@
 //importing our mongoose connection
 const mongoose = require('mongoose');
-const { GridFSBucket } = require('mongodb');
 
 //invoke our connection
 mongoose.connect(
@@ -11,8 +10,5 @@ mongoose.connect(
 );
 
 const connection = mongoose.connection;
-const gridConnect = new GridFSBucket(connection, {
-    bucketName: 'Image',
-});
 
-module.exports = { connection, gridConnect };
+module.exports = connection;
