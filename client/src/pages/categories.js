@@ -141,7 +141,9 @@ export default function Categories() {
                   }}
                 >
                   <React.Fragment key={product._id}>
-                  <ImageUploadForm
+                    {/* For future development w/ admin routes */}
+                    
+                  {/* <ImageUploadForm
                 productId={product._id}
                 onUploadSuccess={() => {
                   // Call the refetch function to fetch the updated data
@@ -149,7 +151,7 @@ export default function Categories() {
                   // Call the handleUploadSuccess function
                   handleUploadSuccess(product._id);
                 }}
-              />
+              /> */}
                     <Link
                       to={`/product/${product._id}`}
                       style={{ textDecoration: "none", color: "black" }}

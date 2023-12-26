@@ -65,7 +65,9 @@ export default function Detail() {
             }}
           >
             <React.Fragment>
-              <ImageUploadForm
+              {/* For future development w/ admin routes */}
+
+              {/* <ImageUploadForm
                 productId={product._id}
                 onUploadSuccess={() => {
                   // Call the refetch function to fetch the updated data
@@ -73,7 +75,7 @@ export default function Detail() {
                   // Call the handleUploadSuccess function
                   handleUploadSuccess(product._id);
                 }}
-              />
+              /> */}
               <SingleProduct
                 _id={product._id}
                 name={product.name}
