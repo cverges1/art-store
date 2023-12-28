@@ -5,13 +5,7 @@ export const QUERY_CATEGORIES = gql`
     categories {
       _id
       categoryName
-      categoryImage {
-        _id
-        encoding
-        filename
-        mimetype
-        url
-      }
+      categoryImage
     }
   }
 `;

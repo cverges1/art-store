@@ -9,7 +9,6 @@ const {
   Product,
   Category,
   Order,
-  Image,
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
