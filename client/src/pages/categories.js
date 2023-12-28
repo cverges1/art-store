@@ -14,7 +14,8 @@ import CardHeader from "@mui/material/CardHeader";
 import Card from "@mui/material/Card";
 import { Link } from "react-router-dom";
 import CartButtons from "../components/Buttons";
-import ImageUploadForm from "../components/ImageUploadForm";
+// future devlopment
+// import ImageUploadForm from "../components/ImageUploadForm";
 
 const defaultTheme = createTheme();
 
@@ -48,6 +49,7 @@ export default function Categories() {
 
   const products = data.products;
 
+  console.log(products)
   if (currentCategory === "art commissions" || products.length <= 0) {
     return (
       <ThemeProvider theme={defaultTheme}>
@@ -159,7 +161,7 @@ export default function Categories() {
                       <SingleProduct
                         _id={product._id}
                         name={product.name}
-                        image={product.image}
+                        images={product.images}
                         price={product.price}
                         quantity={product.quantity}
                         description={product.description}
@@ -169,7 +171,7 @@ export default function Categories() {
                       <CartButtons
                         _id={product._id}
                         name={product.name}
-                        image={product.image}
+                        images={product.images}
                         price={product.price}
                         quantity={product.quantity}
                         description={product.description}

@@ -38,6 +38,8 @@ export default function Detail() {
 
   const product = data ? data.product : null;
 
+  console.log(product)
+
   if (!product) {
     return <p>Product not found</p>; // Handle the case when the product is not available
   }
@@ -79,7 +81,7 @@ export default function Detail() {
               <SingleProduct
                 _id={product._id}
                 name={product.name}
-                image={product.image}
+                images={product.images}
                 price={product.price}
                 quantity={product.quantity}
                 description={product.description}
@@ -88,7 +90,7 @@ export default function Detail() {
                 <CartButtons
                   _id={product._id}
                   name={product.name}
-                  image={product.image}
+                  images={product.images}
                   price={product.price}
                   quantity={product.quantity}
                   description={product.description}

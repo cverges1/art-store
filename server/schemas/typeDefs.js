@@ -10,7 +10,7 @@ scalar Upload
   type Category {
     _id: ID
     categoryName: String
-    categoryImage: Image
+    categoryImage: String
   }
 
   type SubCategory {
@@ -24,7 +24,7 @@ scalar Upload
     description: String
     categoryID: Category
     subCategoryID: SubCategory
-    images: [Image] 
+    images: String
     price: Float
     salePrice: Float
     quantity: Int
@@ -48,20 +48,10 @@ scalar Upload
   type Checkout {
     session: ID
   }
-
-  type Image { 
-    _id: ID
-    filename: String
-    mimetype: String
-    encoding: String
-    url: String 
-  }
-
   type Auth {
     token: ID
     user: User
   }
-
   type Query {
     categories: [Category]
     category(_id: ID!): Category
@@ -72,7 +62,6 @@ scalar Upload
     user: User
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout
-    images: [Image]
   }
 
   type Mutation {
@@ -81,7 +70,6 @@ scalar Upload
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     updateProduct(_id: ID!, quantity: Int!): Product
     login(email: String!, password: String!): Auth
-    singleUpload(file: Upload!): Image 
   }
 `;
 

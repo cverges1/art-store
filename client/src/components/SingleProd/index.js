@@ -7,7 +7,7 @@ import { CardHeader } from "@mui/material";
 import { pluralize } from "../../utils/helpers";
 
 export default function SingleProduct(item) {
-  const { image, name, _id, price, quantity, description } = item;
+  const { images, name, _id, price, quantity, description } = item;
 
   return (
     <>
@@ -29,7 +29,7 @@ export default function SingleProduct(item) {
       <CardMedia
         component="img"
         alt={{ name }}
-        src={`/images/${image}`}
+        src={`/images/ProductImages/${images}`}
         sx={{ minWidth: "75vw", maxHeight: "50vh" }}
       />
       <Box>
