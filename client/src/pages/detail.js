@@ -3,15 +3,11 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_PROD } from "../utils/queries";
 import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
 import ProductDetailHeader from "../components/ProductDetailComponents/ProductDetailHeader";
 import ProductDetailImage from "../components/ProductDetailComponents/ProductDetailImage";
-import ProductDetailDescription from "../components/ProductDetailComponents/ProductDetailDescription";
-import ProductDetailPrice from "../components/ProductDetailComponents/ProductDetailPrice";
+import Bundle from "../components/ProductDetailComponents/ProductDetailBundle/Bundle";
 
-import CartButtons from "../components/Buttons";
-import Grid from "@mui/system/Unstable_Grid/Grid";
-import Typography from "@mui/material/Typography";
-import ProductDetailQuantity from "../components/ProductDetailComponents/ProductDetailQuantity";
 // future development
 // import ImageUploadForm from "../components/ImageUploadForm";
 
@@ -51,15 +47,26 @@ export default function Detail() {
   }
 
   return (
-    <React.Fragment>
-      <ProductDetailHeader name={product.name} />
-      <ProductDetailImage images={product.images} description={product.description}/>
-      <ProductDetailDescription description={product.description} />
-      <ProductDetailPrice price={product.price} />
-      <ProductDetailQuantity quantity={product.quantity} />
-      {/* For future development w/ admin routes */}
+    <Card sx={{ backgroundColor: "#eeeeee" }}>
+      <ProductDetailHeader _id={product._id} name={product.name} />
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12} lg={8}>
+          <ProductDetailImage
+            images={product.images}
+            description={product.description}
+          />
+        </Grid>
+        <Grid item xs={12} md={12} lg={4}>
+          <Bundle
+            _id={product._id}
+            name={product.name}
+            description={product.description}
+            quantity={product.quantity}
+            price={product.price}
+          />
+        {/* For future development w/ admin routes */}
 
-      {/* <ImageUploadForm
+        {/* <ImageUploadForm
                 productId={product._id}
                 onUploadSuccess={() => {
                   // Call the refetch function to fetch the updated data
@@ -68,26 +75,8 @@ export default function Detail() {
                   handleUploadSuccess(product._id);
                 }}
               /> */}
-      {product.quantity > 0 ? (
-        <CartButtons
-          _id={product._id}
-          name={product.name}
-          images={product.images}
-          price={product.price}
-          quantity={product.quantity}
-          description={product.description}
-        />
-      ) : (
-        <Typography
-          sx={{
-            textAlign: "center",
-            backgroundColor: "#666666",
-            color: "white",
-          }}
-        >
-          <h3>Product Unavailable</h3>
-        </Typography>
-      )}
-    </React.Fragment>
+       </Grid>
+      </Grid>
+    </Card>
   );
 }
