@@ -13,7 +13,7 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Nav from "./components/Nav";
 import StickyFooter from "./components/Footer";
-import Header from "./components/header";
+import Header from "./components/Header";
 import Detail from "./pages/detail";
 import Categories from "./pages/categories";
 import NoMatch from "./pages/NoMatch";

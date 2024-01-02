@@ -114,10 +114,7 @@ export default function Categories() {
             <Grid
               key={product._id}
               item
-              xs={12}
-              sm={9}
-              md={6}
-              lg={5}
+              lg={6}
               sx={{
                 "&:hover": {
                   transform: "translateY(-5px)",

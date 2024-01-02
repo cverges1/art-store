@@ -29,11 +29,12 @@ export default function CategorySection() {
     <div style={{ textAlign: 'center' }}>
       {categories.map((category) => (
         <Link key={category._id} to={`/category/${category._id}`} style={{ textDecoration: 'none', display: 'inline-block', width: '75vw', position: 'relative' }}>
-          <Card>
+          <Card style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardActionArea>
-              <CardMedia
+            <CardMedia
                 component="img"
-                height="200"
+                height="300"
+                style={{ objectFit: 'cover', marginTop: '10px' }} // Adjust marginTop to lower the image
                 src={`/images/CategoryImages/${category.categoryImage}`}
                 alt={category.categoryName}
               />

@@ -1,4 +1,4 @@
-//importing our database connection
+// Importing our database connection
 const db = require("./connection");
 const { User, Product, Category, SubCategory } = require("../models");
 
@@ -10,8 +10,9 @@ db.once("open", async () => {
     { categoryName: "Prints", categoryImage: "prints.jpeg" },
     { categoryName: "Art Commissions", categoryImage: "commissions.JPG" },
   ]);
-  //console log that lets us know that the categories have been seeded
-  console.log("categories seeded");
+
+  // Console log that lets us know that the categories have been seeded
+  console.log("Categories seeded");
 
   await SubCategory.deleteMany();
 
@@ -21,16 +22,17 @@ db.once("open", async () => {
     { subCategoryName: "Pen and Ink" },
     { subCategoryName: "Acrylics" },
   ]);
-  //console log that lets us know that the subcategories have been seeded
+
+  // Console log that lets us know that the subcategories have been seeded
   console.log("SubCategories seeded");
 
   await Product.deleteMany();
 
   const products = await Product.insertMany([
     {
-      name: "Billie Eilish Portrait",
+      name: "Billie Eilish",
       description:
-        "This original portrait is of singer song writer Billie Eilish. This piece was made only using penicl, pen and ink.",
+        "This original portrait is of singer-songwriter Billie Eilish. Crafted with pencil, pen, and ink, it captures the essence of the artist's unique style.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       images: "billie-eilish.jpeg",
@@ -40,7 +42,7 @@ db.once("open", async () => {
     {
       name: "Canyon at Dusk",
       description:
-        "This original landscape depcits a river running through a canyon at dusk. It was created using oil paints on canvas.",
+        "Immerse yourself in the serene beauty of a river winding through a canyon at dusk with this original landscape. Created using oil paints on canvas.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       images: "canyon-river-dusk.JPG",
@@ -50,7 +52,7 @@ db.once("open", async () => {
     {
       name: "Death to Life",
       description:
-        "Experience the profound journey of transformation with our art print titled 'Death to Life.' Created with a captivating blend of pen, ink, and watercolor, this piece skillfully captures the essence of rebirth after a traumatic experience. As you gaze upon the intricate details and dynamic interplay of shades, you'll find the artist's representation of the metamorphosis from darkness to light. The use of pen and ink adds a sense of permanence to the delicate watercolor, echoing the strength that emerges from life's struggles. 'Death to Life' serves as a poignant reminder that, like the ebb and flow of the artist's strokes, life has its intricate moments of both chaos and serenity. Hang this print in your space to evoke contemplation and inspire a renewed sense of hope, resilience, and the beauty that arises from overcoming adversity. Embrace the symbolism of rebirth and transformation with 'Death to Life' — a striking addition to any art collection that speaks to the resilience of the human spirit.",
+        "Embark on a profound journey of transformation with our art print titled 'Death to Life.' This captivating piece, skillfully blending pen, ink, and watercolor, symbolizes rebirth after a traumatic experience.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "death-to-life.jpeg",
@@ -59,7 +61,8 @@ db.once("open", async () => {
     },
     {
       name: "Elegant Elephant",
-      description: "Watercolor on cold pressed paper and dimensions",
+      description:
+        "Discover the graceful beauty of our 'Elegant Elephant' print. Created using watercolor on cold-pressed paper, this piece exudes tranquility and charm.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "elephant.jpeg",
@@ -68,7 +71,8 @@ db.once("open", async () => {
     },
     {
       name: "Feeling Pine",
-      description: "Pen and Ink on cold pressed paper and dimensions",
+      description:
+        "Experience the rustic charm of 'Feeling Pine,' a pen and ink print on cold-pressed paper. This artwork captures the essence of nature in its detailed portrayal of a pine tree.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "feeling-pine.jpeg",
@@ -77,7 +81,8 @@ db.once("open", async () => {
     },
     {
       name: "Bottom of the Canyon",
-      description: "Pen and Ink on cold pressed paper and dimensions",
+      description:
+        "Journey to the 'Bottom of the Canyon' with this original oil painting. The intricate details capture the depth and beauty of the Grand Canyon's rugged landscape.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       images: "grand-canyon-oil.jpeg",
@@ -86,7 +91,8 @@ db.once("open", async () => {
     },
     {
       name: "Bright Angel Trail",
-      description: "Acrylic on canvas and dimensions",
+      description:
+        "Immerse yourself in the vibrant 'Bright Angel Trail' with this original watercolor and pen and ink piece. The artwork depicts the majestic beauty of the Grand Canyon as seen from the iconic Bright Angel Trail.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "grand-canyon-watercolor.jpeg",
@@ -95,7 +101,8 @@ db.once("open", async () => {
     },
     {
       name: "Humphrey's Peak",
-      description: "Print of Humphrey's peak in flagstaff AZ. Made with watercolor, pen and ink.",
+      description:
+        "Adorn your space with a print of 'Humphrey's Peak,' showcasing the beauty of Flagstaff, AZ. This watercolor and pen and ink piece offers a picturesque view of the iconic peak.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "humphrey's-peak.jpeg",
@@ -104,7 +111,8 @@ db.once("open", async () => {
     },
     {
       name: "In the Inlet",
-      description: "Oil painting print of an inlet with glaciers in the background",
+      description:
+        "Transport yourself to an 'Inlet' surrounded by glaciers with this oil painting print. The seagulls and pine trees create a serene atmosphere captured in vivid detail.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[0]._id,
       images: "inlet.JPG",
@@ -113,7 +121,8 @@ db.once("open", async () => {
     },
     {
       name: "On the Edge",
-      description: "Oil painting of a single pine tree near the bank of a waterfall. print.",
+      description:
+        "Feel the thrill with 'On the Edge,' an oil painting print capturing a single pine tree near the bank of a waterfall. The detailed depiction exudes a sense of natural beauty.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[0]._id,
       images: "leaning-pine.JPG",
@@ -122,7 +131,8 @@ db.once("open", async () => {
     },
     {
       name: "Lone Mesa",
-      description: "Print of oil painting. Depcits a desert landscape with a single mesa.",
+      description:
+        "Admire the solitary beauty of 'Lone Mesa' with this print of an oil painting. The desert landscape with a single mesa is rendered in stunning detail, perfect for any art collection.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[0]._id,
       images: "lone-mesa.JPG",
@@ -131,7 +141,8 @@ db.once("open", async () => {
     },
     {
       name: "Man Sitting",
-      description: "Original piece. Pen and ink portrait of a man. 5 shades of Cross-hatching implemented.",
+      description:
+        "Own a piece of artistry with 'Man Sitting,' an original pen and ink portrait featuring cross-hatching techniques. The portrayal captures a man's essence with five shades of detail.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       images: "man-portrait.jpeg",
@@ -139,8 +150,9 @@ db.once("open", async () => {
       quantity: 1,
     },
     {
-      name: "A Hike to remember",
-      description: "Print. Watercolor, pen and ink. A desert landscape where to people off in the distance sit under a mesquite tree and look out in the distance.",
+      name: "A Hike to Remember",
+      description:
+        "Relive the beauty of a memorable hike with this watercolor, pen and ink print. A desert landscape unfolds, two figures sit beneath a mesquite tree, gazing into the distance.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "mother-son.jpg",
@@ -149,7 +161,8 @@ db.once("open", async () => {
     },
     {
       name: "Branching Out || Black and White",
-      description: "Print. Pen and ink. A giant oak tree with many huge branches.",
+      description:
+        "Embrace the intricate details of 'Branching Out' with this black and white pen and ink print. The giant oak tree extends its branches, creating a captivating contrast against the stark background.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[2]._id,
       images: "oak-black-and-white.jpeg",
@@ -158,7 +171,8 @@ db.once("open", async () => {
     },
     {
       name: "Branching Out || Color",
-      description: "Print. Watercolor, Pen and ink. A giant oak tree with many huge branches.",
+      description:
+        "Experience the vibrant beauty of 'Branching Out' with this color print. Created using watercolor and pen and ink, the giant oak tree with its expansive branches becomes a focal point of natural elegance.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "oak-color.jpeg",
@@ -167,7 +181,8 @@ db.once("open", async () => {
     },
     {
       name: "Family Outing",
-      description: "Print. Watercolor, Pen and ink. A family with their dog out at a park.",
+      description:
+        "Celebrate the joy of family with our 'Family Outing' print. Created with watercolor and pen and ink, the artwork depicts a family enjoying a day outdoors, complete with their faithful dog.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "park-bench.JPG",
@@ -176,7 +191,8 @@ db.once("open", async () => {
     },
     {
       name: "Those Eyes",
-      description: "Print. Watercolor, Pen and ink. A portrait of a woman with a piercing stare.",
+      description:
+        "Capture the captivating gaze with 'Those Eyes,' a watercolor, pen and ink print. The detailed portrait of a woman evokes a sense of mystery and allure.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "portrait-color.jpeg",
@@ -185,7 +201,8 @@ db.once("open", async () => {
     },
     {
       name: "Purple Mountains",
-      description: "Print. Watercolor, Pen and ink. A portrait of a woman with a piercing stare.",
+      description:
+        "Transport yourself to the majestic 'Purple Mountains' with this watercolor and pen and ink print. The landscape, featuring cotton candy clouds and a golden hue, creates a serene atmosphere over the forest and stream.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[0]._id,
       images: "purple-mountains.JPG",
@@ -194,7 +211,8 @@ db.once("open", async () => {
     },
     {
       name: "Feeling Blessed, Never Stressed",
-      description: "Print. Watercolor, Pen and ink. A manatee relaxes in a pool of waterfalls almost resembelling a bath house.",
+      description:
+        "Experience serenity with 'Feeling Blessed, Never Stressed,' a watercolor, pen and ink print. A manatee relaxes in a pool of waterfalls, creating a tranquil scene reminiscent of a peaceful bathhouse.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "relaxed-manatee.jpeg",
@@ -203,7 +221,8 @@ db.once("open", async () => {
     },
     {
       name: "Rebel Scum",
-      description: "Print. Watercolor, Pen and ink. Starwars rebel fighter floats with a X wing in the background.",
+      description:
+        "Celebrate the spirit of rebellion with 'Rebel Scum,' a watercolor, pen and ink print. A Star Wars rebel fighter floats gracefully with an X-wing in the background.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "starwars.JPG",
@@ -212,7 +231,8 @@ db.once("open", async () => {
     },
     {
       name: "Very Superstitious",
-      description: "Original. Watercolor, Pen and ink. A landscape of the Superstition Mountain as seen from Lost Dutchman State park range.",
+      description:
+        "Immerse yourself in the magic of the Superstition Mountains with 'Very Superstitious.' This original watercolor and pen and ink landscape captures the essence of the range as seen from Lost Dutchman State Park.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "superstitions.jpeg",
@@ -221,7 +241,8 @@ db.once("open", async () => {
     },
     {
       name: "Tall Waterfalls and Perilous Peaks",
-      description: "Original. Oil. Landscape of a large waterfalls with jagged peaks in the background.",
+      description:
+        "Embark on an adventure with 'Tall Waterfalls and Perilous Peaks,' an original oil painting. The landscape features a large waterfall with jagged peaks in the distance, creating a scene of natural wonder.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       images: "tall-falls.JPG",
@@ -230,7 +251,8 @@ db.once("open", async () => {
     },
     {
       name: "To Rule Them All",
-      description: "Original. Pen and Ink. Sauron from the Lord of the Rings and the One Ring.",
+      description:
+        "Enter the world of fantasy with 'To Rule Them All,' an original pen and ink artwork featuring Sauron from The Lord of the Rings and the One Ring. The intricate details bring the iconic villain to life.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       images: "to-rule-them-all.jpeg",
@@ -239,7 +261,8 @@ db.once("open", async () => {
     },
     {
       name: "Off the Coast",
-      description: "Original. Watercolor Pen and Ink. Seagulls fly around pine trees off the coast of somewhere.",
+      description:
+        "Experience the beauty of the coast with 'Off the Coast,' an original watercolor and pen and ink artwork. Seagulls fly around pine trees, creating a serene and picturesque scene.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "watercolor-pine.jpeg",
@@ -248,7 +271,8 @@ db.once("open", async () => {
     },
     {
       name: "Golden Hour",
-      description: "Original. Acrylic. Purple Mountains, cotton candy clouds and a golden hue over the forest and stream in this landscape.",
+      description:
+        "Bask in the golden glow with 'Golden Hour,' an original acrylic painting. Purple mountains, cotton candy clouds, and a golden hue create a breathtaking landscape over a forest and stream.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[3]._id,
       images: "waterfall-at-sunset.JPG",
@@ -257,7 +281,8 @@ db.once("open", async () => {
     },
     {
       name: "Weaver's Needle",
-      description: "Original. Watercolor, pen and ink. Landscape of Weaver's Needle located in AZ.",
+      description:
+        "Explore the beauty of Arizona with 'Weaver's Needle,' an original watercolor and pen and ink artwork. The landscape captures the iconic Weaver's Needle located in Arizona.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "weavers-needle.JPG",
@@ -266,19 +291,11 @@ db.once("open", async () => {
     },
     {
       name: "Winter Falls",
-      description: "Original. Acrylic. Landscape of Waterfalls and snowcapped mountains in Winter.",
+      description:
+        "Embrace the winter wonderland with 'Winter Falls,' an original acrylic painting. The landscape features waterfalls and snow-capped mountains, creating a scene of serene beauty.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "winter-mountains-waterfalls.png",
-      price: 55.0,
-      quantity: 1,
-    },
-    {
-      name: "Woman Sitting",
-      description: "Original. Pen and Ink. Portrait of a nude model using cross-hatching and dry brushing techniques.",
-      categoryID: categories[0]._id,
-      subCategoryID: subCategories[1]._id,
-      images: "woman-portrait.jpeg",
       price: 55.0,
       quantity: 1,
     },
