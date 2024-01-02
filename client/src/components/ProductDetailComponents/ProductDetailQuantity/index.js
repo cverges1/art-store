@@ -1,24 +1,17 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
+import { pluralize } from "../../../utils/helpers";
 
-
-export default function ProductDetailPrice(item) {
+export default function ProductDetailQuantity(item) {
 
     return (
-    <React.Fragment>
         <Typography
         variant="subtitle"
         color="text.secondary"
         component="div"
-        textAlign={"center"}>
-            Price: 
-        </Typography>
-        <Typography
-        component="div"
         textAlign={"center"}
       >
-     ${item.price}
+        {item.quantity} {pluralize("item", item.quantity)} in stock
       </Typography>
-    </React.Fragment>
-      )
+    )
 }
