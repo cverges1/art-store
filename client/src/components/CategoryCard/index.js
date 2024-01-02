@@ -24,16 +24,18 @@ export default function CategorySection() {
 
   const categories = data.categories;
 
+  console.log(categories)
   return (
     <div style={{ textAlign: 'center' }}>
       {categories.map((category) => (
         <Link key={category._id} to={`/category/${category._id}`} style={{ textDecoration: 'none', display: 'inline-block', width: '75vw', position: 'relative' }}>
-          <Card>
+          <Card style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardActionArea>
-              <CardMedia
+            <CardMedia
                 component="img"
-                height="200"
-                src={`/images/${category.categoryImage}`}
+                height="300"
+                style={{ objectFit: 'cover', marginTop: '10px' }} // Adjust marginTop to lower the image
+                src={`/images/CategoryImages/${category.categoryImage}`}
                 alt={category.categoryName}
               />
               <CardContent style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white' }}>
