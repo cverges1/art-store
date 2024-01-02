@@ -5,13 +5,7 @@ export const QUERY_CATEGORIES = gql`
     categories {
       _id
       categoryName
-      categoryImage {
-        _id
-        encoding
-        filename
-        mimetype
-        url
-      }
+      categoryImage
     }
   }
 `;
@@ -21,13 +15,7 @@ query Product($subCategoryId: ID, $categoryId: ID, $name: String) {
   products(subCategoryID: $subCategoryId, categoryID: $categoryId, name: $name) {
     _id
     name
-    images {
-      _id
-      encoding
-      filename
-      mimetype
-      url
-    }
+    images
     price
     salePrice
     description
@@ -35,13 +23,7 @@ query Product($subCategoryId: ID, $categoryId: ID, $name: String) {
     categoryID {
       categoryName
       _id
-      categoryImage {
-        _id
-        encoding
-        filename
-        mimetype
-        url
-      }
+      categoryImage
     }
     subCategoryID {
       subCategoryName
@@ -57,26 +39,15 @@ query SingProduct($id: ID!) {
   product(_id: $id) {
     _id
     name
-    images {
-      _id
-      encoding
-      filename
-      mimetype
-      url
-    }
+    images
     description
     price
     salePrice
     quantity
     categoryID {
+      _id
       categoryName
-      categoryImage {
-        _id
-        encoding
-        filename
-        mimetype
-        url
-      }
+      categoryImage 
     }
     subCategoryID {
       subCategoryName

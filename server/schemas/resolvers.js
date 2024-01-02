@@ -9,7 +9,6 @@ const {
   Product,
   Category,
   Order,
-  Image,
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")(process.env.STRIPE);
@@ -219,54 +218,54 @@ const resolvers = {
       return { token, user };
     },
     // ...
+// For future devlopment
+    // singleUpload: async (parent, { file, productID, categoryID }) => {
+    //   try {
+    //     const { createReadStream, filename, mimetype, encoding } = await file;
 
-    singleUpload: async (parent, { file, productID, categoryID }) => {
-      try {
-        const { createReadStream, filename, mimetype, encoding } = await file;
+    //     // Generate a unique key for the S3 object
+    //     const key = `uploads/${uuidv4()}-${filename}`;
 
-        // Generate a unique key for the S3 object
-        const key = `uploads/${uuidv4()}-${filename}`;
+    //     // Upload the file to S3
+    //     const uploadParams = {
+    //       Bucket: process.env.AWS_S3_BUCKET_NAME,
+    //       Key: key,
+    //       Body: createReadStream(),
+    //       ContentType: mimetype,
+    //     };
 
-        // Upload the file to S3
-        const uploadParams = {
-          Bucket: process.env.AWS_S3_BUCKET_NAME,
-          Key: key,
-          Body: createReadStream(),
-          ContentType: mimetype,
-        };
+    //     const data = await s3.upload(uploadParams).promise();
 
-        const data = await s3.upload(uploadParams).promise();
+    //     // Create an Image document in your MongoDB collection with S3 URL
+    //     const image = await Image.create({
+    //       filename,
+    //       mimetype,
+    //       encoding,
+    //       url: data.Location, // Store S3 URL
+    //     });
 
-        // Create an Image document in your MongoDB collection with S3 URL
-        const image = await Image.create({
-          filename,
-          mimetype,
-          encoding,
-          url: data.Location, // Store S3 URL
-        });
+    //     // If productID is provided, associate the image with the specified product
+    //     if (productID) {
+    //       await Product.findByIdAndUpdate(productID, {
+    //         $push: { image },
+    //       });
+    //     }
 
-        // If productID is provided, associate the image with the specified product
-        if (productID) {
-          await Product.findByIdAndUpdate(productID, {
-            $push: { image },
-          });
-        }
+    //     // If categoryID is provided, associate the image with the specified category
+    //     if (categoryID) {
+    //       await Category.findByIdAndUpdate(categoryID, {
+    //         $push: { image },
+    //       });
+    //     }
 
-        // If categoryID is provided, associate the image with the specified category
-        if (categoryID) {
-          await Category.findByIdAndUpdate(categoryID, {
-            $push: { image },
-          });
-        }
+    //     console.log('File upload successful');
 
-        console.log('File upload successful');
-
-        return image;
-      } catch (error) {
-        console.error('Error uploading file:', error);
-        throw new Error('Failed to upload file');
-      }
-    },
+    //     return image;
+    //   } catch (error) {
+    //     console.error('Error uploading file:', error);
+    //     throw new Error('Failed to upload file');
+    //   }
+    // },
   },
 };
 

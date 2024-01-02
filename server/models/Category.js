@@ -8,9 +8,9 @@ const categorySchema = new Schema({
         required: true
     },
     categoryImage: {
-        type: Schema.Types.ObjectId,
-        ref: 'Image',
-    }
+        type: String,
+        required: true
+    },
 })
 
 const Category = model('Category', categorySchema);
