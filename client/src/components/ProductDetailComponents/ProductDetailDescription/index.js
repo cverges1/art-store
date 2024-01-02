@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 
 
 export default function ProductDetailDescription(item) {
-  const { description } = item;
 
   return (
     <Typography
@@ -12,7 +11,7 @@ export default function ProductDetailDescription(item) {
     component="div"
     textAlign={"center"}
   >
-    {description}
+    {item.description}
   </Typography>
   )
 }

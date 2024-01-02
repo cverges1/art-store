@@ -6,9 +6,12 @@ import Card from "@mui/material/Card";
 import ProductDetailHeader from "../components/ProductDetailComponents/ProductDetailHeader";
 import ProductDetailImage from "../components/ProductDetailComponents/ProductDetailImage";
 import ProductDetailDescription from "../components/ProductDetailComponents/ProductDetailDescription";
+import ProductDetailPrice from "../components/ProductDetailComponents/ProductDetailPrice";
+
 import CartButtons from "../components/Buttons";
 import Grid from "@mui/system/Unstable_Grid/Grid";
 import Typography from "@mui/material/Typography";
+import ProductDetailQuantity from "../components/ProductDetailComponents/ProductDetailQuantity";
 // future development
 // import ImageUploadForm from "../components/ImageUploadForm";
 
@@ -50,8 +53,10 @@ export default function Detail() {
   return (
     <React.Fragment>
       <ProductDetailHeader name={product.name} />
-      <ProductDetailImage images={product.images} />
+      <ProductDetailImage images={product.images} description={product.description}/>
       <ProductDetailDescription description={product.description} />
+      <ProductDetailPrice price={product.price} />
+      <ProductDetailQuantity quantity={product.quantity} />
       {/* For future development w/ admin routes */}
 
       {/* <ImageUploadForm

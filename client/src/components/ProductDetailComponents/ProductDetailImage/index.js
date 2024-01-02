@@ -8,14 +8,13 @@ import { CardHeader } from "@mui/material";
 import { pluralize } from "../../../utils/helpers";
 
 export default function ProductDetailImage(item) {
-    const { images, name, _id, price, quantity, description } = item;
 
     return (
         <CardMedia
         component="img"
-        alt={{ name }}
+        alt={item.description}
         sx={{ maxHeight: 800}}
-        src={`/images/ProductImages/${images}`}
+        src={`/images/ProductImages/${item.images}`}
       />
     )
 }

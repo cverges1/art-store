@@ -3,14 +3,13 @@ import Typography from "@mui/material/Typography";
 import { CardHeader } from "@mui/material";
 
 export default function ProductDetailHeader(item) {
-    const {  name, _id } = item;
 
     return (
         <CardHeader
-        key={_id}
+        key={item._id}
         title={
           <Typography variant="h4" align="center">
-            {name}
+            {item.name}
           </Typography>
         }
         titleTypographyProps={{ align: "center" }}
