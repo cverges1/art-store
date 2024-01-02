@@ -10,6 +10,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import SingleProduct from "../components/SingleProd";
 import ContactCard from "../components/ContactCard";
 import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Card from "@mui/material/Card";
 import { Link } from "react-router-dom";
@@ -78,17 +79,13 @@ export default function Categories() {
                     : theme.palette.grey[700],
               }}
             />
-            <CardContent sx={{ padding: 0 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  mb: 2,
-                }}
-              >
+            <CardContent>
+            <CardMedia
+        sx={{ height: 300, width: 600, margin: "auto" }}
+        image="/images/ProductImages/mother-son.jpg"
+        title="Chris Verges"
+      /> 
                 <ContactCard />
-              </Box>
             </CardContent>
           </Card>
         </Typography>
