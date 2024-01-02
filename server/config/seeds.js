@@ -31,8 +31,7 @@ db.once("open", async () => {
   const products = await Product.insertMany([
     {
       name: "Billie Eilish",
-      description:
-        "This original portrait is of singer-songwriter Billie Eilish. Crafted with pencil, pen, and ink, it captures the essence of the artist's unique style.",
+      description:" Immerse yourself in the captivating world of singer-songwriter Billie Eilish with this original portrait. Meticulously crafted using a blend of pencil, pen, and ink, this artwork skillfully captures the essence of Billie's unique style. The play of shadows and fine details brings the portrait to life, making it a must-have for any music enthusiast.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[2]._id,
       images: "billie-eilish.jpeg",
@@ -42,7 +41,7 @@ db.once("open", async () => {
     {
       name: "Canyon at Dusk",
       description:
-        "Immerse yourself in the serene beauty of a river winding through a canyon at dusk with this original landscape. Created using oil paints on canvas.",
+        "Transport yourself to a moment of serene beauty with 'Canyon at Dusk.' This original landscape, created using oil paints on canvas, invites you to explore the winding river through a rugged canyon as the sun gracefully sets. The warm hues and intricate details convey the tranquility of nature's twilight, making it a timeless addition to your art collection.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[0]._id,
       images: "canyon-river-dusk.JPG",
@@ -52,7 +51,7 @@ db.once("open", async () => {
     {
       name: "Death to Life",
       description:
-        "Embark on a profound journey of transformation with our art print titled 'Death to Life.' This captivating piece, skillfully blending pen, ink, and watercolor, symbolizes rebirth after a traumatic experience.",
+        "Embark on a profound journey of transformation with 'Death to Life,' a captivating art print skillfully blending pen, ink, and watercolor. Symbolizing rebirth after a traumatic experience, the detailed strokes and vibrant colors evoke a sense of renewal and hope. This artwork serves as a powerful reminder of resilience and the beauty that can emerge from life's challenges.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "death-to-life.jpeg",
@@ -62,7 +61,7 @@ db.once("open", async () => {
     {
       name: "Elegant Elephant",
       description:
-        "Discover the graceful beauty of our 'Elegant Elephant' print. Created using watercolor on cold-pressed paper, this piece exudes tranquility and charm.",
+        "Discover the graceful beauty of 'Elegant Elephant' art print, a masterpiece created with watercolor on cold-pressed paper. The gentle strokes and careful detailing bring out the majestic charm of the elephant, creating a tranquil atmosphere. This piece is a celebration of nature's elegance and a perfect addition to any art lover's collection.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[1]._id,
       images: "elephant.jpeg",
@@ -72,7 +71,7 @@ db.once("open", async () => {
     {
       name: "Feeling Pine",
       description:
-        "Experience the rustic charm of 'Feeling Pine,' a pen and ink print on cold-pressed paper. This artwork captures the essence of nature in its detailed portrayal of a pine tree.",
+        "Immerse yourself in the rustic charm of 'Feeling Pine,' a pen and ink print on cold-pressed paper. This detailed artwork captures the essence of nature with its intricate portrayal of a pine tree. The play of light and shadow creates a sense of depth, inviting you to connect with the beauty of the outdoors in every stroke.",
       categoryID: categories[0]._id,
       subCategoryID: subCategories[1]._id,
       images: "feeling-pine.jpeg",
@@ -112,7 +111,7 @@ db.once("open", async () => {
     {
       name: "In the Inlet",
       description:
-        "Transport yourself to an 'Inlet' surrounded by glaciers with this oil painting print. The seagulls and pine trees create a serene atmosphere captured in vivid detail.",
+        "Transport yourself to an 'Inlet' surrounded by glaciers with this oil painting print. The snowcapped peaks, pine trees and calm waters create a serene atmosphere captured in vivid detail.",
       categoryID: categories[1]._id,
       subCategoryID: subCategories[0]._id,
       images: "inlet.JPG",

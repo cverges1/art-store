@@ -15,8 +15,8 @@ export default function About() {
       </CardContent>
       <CardMedia
         sx={{ height: 300, width: 300, margin: "auto" }}
-        image="/images/Placeholder-Landscape.jpg"
-        title="green iguana"
+        image="/images/artist.JPG"
+        title="Chris Verges"
       />
       <CardContent>
         <Typography sx={{ marginBottom: 2 }} variant="body2" color="text.secondary">

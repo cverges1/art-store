@@ -3,18 +3,19 @@ import Typography from "@mui/material/Typography";
 import { CardHeader } from "@mui/material";
 
 export default function ProductDetailHeader(item) {
-    const {  name, _id } = item;
 
+  console.log(item)
     return (
         <CardHeader
-        key={_id}
+        key={item._id}
         title={
           <Typography variant="h4" align="center">
-            {name}
+            {item.name}
           </Typography>
         }
         titleTypographyProps={{ align: "center" }}
         sx={{
+          borderBottom: "solid black 1px",
           backgroundColor: (theme) =>
             theme.palette.mode === "light"
               ? theme.palette.grey[200]
