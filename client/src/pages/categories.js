@@ -50,7 +50,6 @@ export default function Categories() {
 
   const products = data.products;
 
-  console.log(products)
   if (currentCategory === "art commissions" || products.length <= 0) {
     return (
       <ThemeProvider theme={defaultTheme}>
