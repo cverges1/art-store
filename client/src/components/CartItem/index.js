@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_PRODUCT_QUANTITY } from '../../utils/mutations';
 
 const CartItem = ({ item }) => {
-  const [, dispatch] = useStoreContext();
+  const [ dispatch] = useStoreContext();
   const [prevQuantity, setPrevQuantity] = useState(item.purchaseQuantity);
 
   const [updateProduct] = useMutation(UPDATE_PRODUCT_QUANTITY);
@@ -88,11 +88,11 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex-row">
       <div>
-        <img src={`/images/${item.image}`} alt="" />
+        <img src={`/images/ProductImages/${item.images}`} alt={`${item.description}`} />
       </div>
       <div>
         <div>
-          {item.name}, ${item.price}
+          {item.name} | ${item.price} 
         </div>
         <div>
           <span>Qty:</span>
