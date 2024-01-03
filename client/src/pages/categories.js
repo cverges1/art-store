@@ -78,12 +78,21 @@ export default function Categories() {
                     : theme.palette.grey[700],
               }}
             />
-            <CardContent>
-            <CardMedia
-        sx={{ height: 300, width: 600, margin: "auto" }}
-        image="/images/ProductImages/mother-son.jpg"
-        title="Chris Verges"
-      /> 
+          <CardContent>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CardMedia
+                component="img"
+                alt="Art piece of a mother and son hiking together. Example art commission."
+                sx={{ maxHeight: 600, maxWidth: 600 }}
+                src="/images/ProductImages/mother-son.jpg"
+              />
+            </div>
                 <ContactCard />
             </CardContent>
           </Card>
