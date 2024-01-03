@@ -21,7 +21,7 @@ import Success from "./pages/Success";
 
 // Create an HTTP link for GraphQL queries
 const httpLink = createUploadLink({
-  uri: process.env.API_URI,
+  uri: "/graphql",
 });
 
 // Set up authentication headers for Apollo Client
