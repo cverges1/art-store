@@ -24,7 +24,6 @@ export default function CategorySection() {
 
   const categories = data.categories;
 
-  console.log(categories)
   return (
     <div style={{ textAlign: 'center' }}>
       {categories.map((category) => (

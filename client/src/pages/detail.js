@@ -63,6 +63,7 @@ export default function Detail() {
             description={product.description}
             quantity={product.quantity}
             price={product.price}
+            images={product.images}
           />
         {/* For future development w/ admin routes */}
 
