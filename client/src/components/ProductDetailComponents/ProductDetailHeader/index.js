@@ -4,7 +4,6 @@ import { CardHeader } from "@mui/material";
 
 export default function ProductDetailHeader(item) {
 
-  console.log(item)
     return (
         <CardHeader
         key={item._id}

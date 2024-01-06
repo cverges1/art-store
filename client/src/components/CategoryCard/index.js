@@ -18,7 +18,7 @@ export default function CategorySection() {
   }
 
   if (error) {
-    console.log("Error fetching categories", error);
+    console.error("Error fetching categories", error);
     return <p>Error: {error.message}</p>;
   }
 

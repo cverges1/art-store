@@ -1,7 +1,5 @@
 require("dotenv").config();
-const { createReadStream } = require('fs');
 const { GraphQLUpload } = require("graphql-upload-minimal");
-const { v4: uuidv4 } = require('uuid');
 const { AuthenticationError } = require("apollo-server-express");
 const {
   User,
@@ -118,7 +116,7 @@ const resolvers = {
         const product = await stripe.products.create({
           name: products[i].name,
           description: products[i].description,
-          images: [`${url}/images/${encodeURIComponent(products[i].image)}`],
+          images: [`${url}/images/${encodeURIComponent(products[i].images)}`],
         });
 
         const price = await stripe.prices.create({
@@ -148,7 +146,6 @@ const resolvers = {
   Mutation: {
     // Mutation to add a user
     addUser: async (parent, args) => {
-      console.log(args);
       try {
         const user = await User.create(args);
         const token = signToken(user);
