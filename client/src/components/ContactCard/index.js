@@ -34,7 +34,7 @@ const ContactCard = () => {
           }, 1500);
         },
         (error) => {
-          console.log(error.text);
+          console.error(error.text);
           setBtnText("Error!");
         }
       );

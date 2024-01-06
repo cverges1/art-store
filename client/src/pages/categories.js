@@ -25,14 +25,14 @@ export default function Categories() {
   const { currentCategory } = state;
   const { id } = useParams();
 
-    // State to force a re-render if needed
-    const [forceRerender, setForceRerender] = useState(false);
+  // State to force a re-render if needed
+  const [forceRerender, setForceRerender] = useState(false);
 
-    // Function to handle successful image uploads
-    function handleUploadSuccess(productId) {
-      // Set the state to force a re-render
-      setForceRerender(!forceRerender);
-    }
+  // Function to handle successful image uploads
+  function handleUploadSuccess(productId) {
+    // Set the state to force a re-render
+    setForceRerender(!forceRerender);
+  }
 
   const { loading, error, data, refetch } = useQuery(QUERY_PRODUCTS, {
     variables: { categoryId: id },
@@ -44,7 +44,7 @@ export default function Categories() {
   }
 
   if (error) {
-    console.log("Error fetching product", error);
+    console.error("Error fetching product", error);
     return <p>Error: {error.message}</p>;
   }
 
@@ -78,22 +78,22 @@ export default function Categories() {
                     : theme.palette.grey[700],
               }}
             />
-          <CardContent>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CardMedia
-                component="img"
-                alt="Art piece of a mother and son hiking together. Example art commission."
-                sx={{ maxHeight: 600, maxWidth: 600 }}
-                src="/images/ProductImages/mother-son.jpg"
-              />
-            </div>
-                <ContactCard />
+            <CardContent>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  alt="Art piece of a mother and son hiking together. Example art commission."
+                  sx={{ maxHeight: 600, maxWidth: 600 }}
+                  src="/images/ProductImages/mother-son.jpg"
+                />
+              </div>
+              <ContactCard />
             </CardContent>
           </Card>
         </Typography>
@@ -146,8 +146,8 @@ export default function Categories() {
                 >
                   <React.Fragment key={product._id}>
                     {/* For future development w/ admin routes */}
-                    
-                  {/* <ImageUploadForm
+
+                    {/* <ImageUploadForm
                 productId={product._id}
                 onUploadSuccess={() => {
                   // Call the refetch function to fetch the updated data
@@ -179,7 +179,13 @@ export default function Categories() {
                         description={product.description}
                       />
                     ) : (
-                      <Typography sx={{textAlign: "center", backgroundColor: "#666666", color: "white" }}>
+                      <Typography
+                        sx={{
+                          textAlign: "center",
+                          backgroundColor: "#666666",
+                          color: "white",
+                        }}
+                      >
                         <h3>Product Unavailable</h3>
                       </Typography>
                     )}

@@ -34,13 +34,11 @@ export default function Detail() {
   }
 
   if (error) {
-    console.log("Error fetching product", error);
+    console.error("Error fetching product", error);
     return <p>Error: {error.message}</p>;
   }
 
   const product = data ? data.product : null;
-
-  console.log(product);
 
   if (!product) {
     return <p>Product not found</p>; // Handle the case when the product is not available
