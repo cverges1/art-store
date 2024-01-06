@@ -24,7 +24,7 @@ At this time checkout only works in development as art is still a fun hobby and 
 
 ## Credits
 
-- Collaborators: N/A
+- Collaborators: Nick Verges (Github: [nverges](https://github.com/nverges)) has provided helpful insight and advice during the development of this app.
 - Third Party Assets: React.js, Node.js, Express.js, MUI, Stripe, concurrently, GraphQL, MongoDB, bcrypt
 
 ## Questions
