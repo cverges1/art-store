@@ -20,6 +20,8 @@ To install this project download the starter code from https://github.com/cverge
 
 Visit https://chrisvergesart-a007f39ad1a3.herokuapp.com/ and explore this example e-commerce site for an up and coming artist. Explore different pages, categories and add products to the cart to see how the site would work.
 
+At this time checkout only works in development as art is still a fun hobby and am not quite ready to start selling. To see how it would work, please follow the steps to [Install](#installation) and use a test [card number](https://stripe.com/docs/testing?testing-method=card-numbers#visa).
+
 ## Credits
 
 - Collaborators: N/A
