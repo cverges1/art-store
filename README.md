@@ -12,6 +12,15 @@ The Production verison of this application can be found at https://chrisvergesar
 
 -[Installation](#installation) -[Usage](#usage) -[Credits](#credits) -[License](#license)
 
+## Website Screenshots
+
+![home-page](./assets/home.png)
+![originals-page](./assets/originals.png)
+![prints-page](./assets/prints.png)
+![commissions-page](./assets/art-commissions.png)
+![about-page](./assets/about.png)
+![contact-page](./assets/contact.png)
+
 ## Installation
 
 To install this project download the starter code from https://github.com/cverges1/art-store/tree/main. Once complete, run `npm i` to install all necessary dependencies and finally `npm run seed` to add all data to the database.
