@@ -14,12 +14,12 @@ The Production verison of this application can be found at https://chrisvergesar
 
 ## Website Screenshots
 
-![home-page](./assets/home.jpeg)
-![originals-page](./assets/originals.jpeg)
-![prints-page](./assets/prints.jpeg)
-![commissions-page](./assets/art-commissions.jpeg)
-![about-page](./assets/about.jpeg)
-![contact-page](./assets/contact.jpeg)
+![home-page](./assets/Screenshots/home.jpeg)
+![originals-page](./assets/Screenshots/originals.jpeg)
+![prints-page](./assets/Screenshots/prints.jpeg)
+![commissions-page](./assets/Screenshots/art-commissions.jpeg)
+![about-page](./assets/Screenshots/about.jpeg)
+![contact-page](./assets/Screenshots/contact.jpeg)
 
 ## Installation
 
